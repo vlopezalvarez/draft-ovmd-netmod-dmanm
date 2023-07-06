@@ -1,6 +1,6 @@
 ---
-title: "Guidelines to use device models in the North-Bound Interface of SDN controllers"
-abbrev: "Device model NBI controller"
+title: "TODO - Your title"
+abbrev: "TODO - Abbreviation"
 category: info
 
 docname: draft-ogondio-opsawg-device-models-latest
@@ -12,9 +12,9 @@ v: 3
 area: "Operations and Management"
 workgroup: "Operations and Management Area Working Group"
 keyword:
- - Device models
- - NBI
- 
+ - next generation
+ - unicorn
+ - sparkling distributed ledger
 venue:
   group: "Operations and Management Area Working Group"
   type: "Working Group"
@@ -27,7 +27,7 @@ author:
  -
     fullname: Your Name Here
     organization: Your Organization Here
-    email: "xxxx@gmail.com"
+    email: "vlopezalvarez@gmail.com"
 
 normative:
 
