@@ -12,7 +12,7 @@ v: 3
 area: "Operations and Management"
 workgroup: "Operations and Management Area Working Group"
 keyword:
- - device models
+ - Device models
  - NBI
  
 venue:
@@ -30,7 +30,7 @@ author:
     email: oscar.gonzalezdedios@telefonica.com
 
   -
-    name: Victor Lopez
+    fullname: Victor Lopez
     org: Nokia
     email: victor.lopez@nokia.com
 
