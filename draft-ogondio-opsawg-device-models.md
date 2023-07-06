@@ -1,6 +1,6 @@
 ---
-title: "TODO - Your title"
-abbrev: "TODO - Abbreviation"
+title: "Guidelines to use device models in the North-Bound Interface of SDN controllers"
+abbrev: "Device model NBI controller"
 category: info
 
 docname: draft-ogondio-opsawg-device-models-latest
@@ -25,9 +25,13 @@ venue:
 
 author:
  -
-    fullname: Your Name Here
-    organization: Your Organization Here
-    email: "vlopezalvarez@gmail.com"
+    fullname: Oscar Gonzalez de Dios
+    organization: Telefonica
+    email: "oscar.gonzalezdedios@telefonica.com"
+ -
+    fullname: Victor Lopez
+    organization: Nokia
+    email: "victor.lopez@nokia.com"
 
 normative:
 
