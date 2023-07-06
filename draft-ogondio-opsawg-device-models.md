@@ -81,7 +81,7 @@ Software-Defined Networking (SDN) controllers facilitate seamless communication 
 
 {{SDNsce}} illustrates the hierarchical relationship between the OSS, SDN controller and the network elements. Typically, the OSS serves as the central management system responsible for overseeing the entire network. Similarly, an orchestrator acts with a similar role in scenarios like network slicing. The SDN controller, positioned in the middle, acts as an intermediary, facilitating communication and coordination between the OSS and the network elements. The network elements at the bottom are directly controlled and configured by the SDN controller. This archicture enables efficient translation of high-level network policies into device-specific configurations, ultimately streamlining network management and decoupling the systems from the network evolution.
 
-Device models like ietf-routing-policy {{!RFC8349}}, ietf-bgp-policy {{!draft-ietf-idr-bgp-model}} or ietf-access-list {{!RFC 8519}} were defined to be applicable in the South-Bound Interface (SBI)of the SDN controller. Therefore, they do not have network concepts to make them applicable in the North-Bound Interface (NBI) of the SDN controller.
+Device models like ietf-routing-policy {{!RFC8349}}, ietf-bgp-policy {{I-D.ietf-idr-bgp-model}} or ietf-access-list {{!RFC8519}} were defined to be applicable in the South-Bound Interface (SBI)of the SDN controller. Therefore, they do not have network concepts to make them applicable in the North-Bound Interface (NBI) of the SDN controller.
 
 The work in IETF can be directed to create network models for each device model or create a generic reusable structure for each model. This document proposes a reusable structure following the second approach.
 
