@@ -85,20 +85,194 @@ Device models like ietf-routing-policy {{!RFC8349}}, ietf-bgp-policy {{I-D.ietf-
 
 The work in IETF can be directed to create network models for each device model or create a generic reusable structure for each model. This document proposes a reusable structure following the second approach.
 
+## Terminology and Notations
 
-# Conventions and Definitions
+TBD
 
-{::boilerplate bcp14-tagged}
+## Requirements Language
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in  {{!RFC2119}}, {{!RFC8174}} when, and only when, they appear in all capitals, as shown here.
+
+## Prefix in Data Node Names
+
+  In this document, names of data nodes and other data model objects will be prefixed using the standard prefix associated with the corresponding YANG imported modules, as shown in the following table.
+
+| Prefix  | Yang Module            | Reference    |
+| ------  | ---------------------- | ------------ |
+| ntwdev  | ietf-network-device    | RFCXXX       |
+{: #tab-prefixes title="Prefixes and corresponding YANG modules"}
+
+RFC Editor Note:
+Please replace XXXX with the RFC number assigned to this document if the document becomes a RFC. Please remove this note in that case.
+
+# Use cases
+
+##  Device Config as a Service
+
+Device Config as a Service involves the utilization of device models by an Operations Support System (OSS) to configure network elements through an SDN controller. In this scenario, the SDN controller acts as an intermediary between the OSS and the network elements, providing a configuration service for each network element.
+
+By leveraging device models, the OSS gains a common representation of the network elements' capabilities and configuration parameters. These device models define the desired configuration for specific functionalities, such as ACLs or routing policies. The OSS utilizes these device models to define the desired configuration for each network element.
+
+Through the SDN controller, the OSS can send the configuration instructions based on the device models to the respective network elements. The SDN controller translates and applies the configuration, ensuring consistency and correctness across the network. Moreover, the mediation of the SDN controller facilitates the access to the network elements from several users, applications or OSS minimizing the impact on the device.
+
+## Profiles
+
+By leveraging device models, network operators can design profile that represent configurations for specific network functionalities, protocols, or services. These templates serve as reusable building blocks, encapsulating best practices, and ensuring consistency in network configuration and management. Once a profile is created, it can be applied to one or multiple network elements, either individually or in groups, depending on the specific network requirements.
+
+This approach not only simplifies the configuration process but also reduces the likelihood of errors and misconfigurations, ultimately improving network stability and performance. Moreover, this process facilitates the lifecycle of the configurations enabling updating the profiles and, later, the network elements in a consistent manner across multiple network elements as a network-wide operation.
+
+# Guidelines to use device models in the North-Bound Interface of SDN controllers
+
+## Groups of network elements
+
+The management of groups of network elements is a requirement to cover the previous use cases. It is intended to have a YANG model to tag a group of network elements under the same identifier, so the operator can apply a given configuration in a set of devices. This document defines a module called "grp-ntw-elements", which provides a structured approach to represent and manipulate groups of network elements, enabling efficient network management and configuration.
+
+The "grp-ntw-elements" module defines a YANG model for representing a group of network elements. Within the module, there is a list called "grp-ntw-elements" that serves as a container for defining groups of network elements. Each group is uniquely identified by the "grp-ne-id" leaf, which has a string data type and represents the group's identifier.
+
+The "grp-ntw-elements" list includes a nested list called "ntw-elements" to specify the individual network elements within each group. The "ntw-elements" list has a key of "ne-id" to uniquely identify each network element. The "ne-id" leaf represents the identifier of each network element and has a string data type.
+
+~~~~
+module: grp-ntw-elements
+  +--rw grp-ntw-elements* [grp-ne-id]
+     +--rw grp-ne-id       string
+     +--rw ntw-elements* [ne-id]
+        +--rw ne-id    string
+~~~~
+{: #grp-ntw-elements-tree-st title="Group of network elements" artwork-align="center"}
+
+## YANG structure for extending the models
+
+The proposal of this work is to propose a structure to enable the reutilization of the device models in network scenarios. The objective is to create a YANG model with a list of instances referencing the device model and providing a nested structure to store deployment information for network elements associated with each instance in the list. The guideline is to follow the next structure in the list:
+* A key called devmod-name representing the name for each entry in the list.
+* A leaf named devmod-name of type string that serves as a string identifier for the list entry.
+* An import of the device model.
+* A container named deployment that includes:
++ A list called ntw-elements with the following elements:
++ A leaf named ne-id of type string that serves as the network element identifier (which is the key).
++ A leaf named devmod-alias of type string that serves as the device module alias for the deployment.
++ A list called grp-ntw-elements with the following elements:
++ A leaf named grp-ne-id of type string that serves as the network element identifier (which is the key).
++ A leaf named devmod-alias of type string that serves as the device module alias for the deployment.
+
+## Tree Diagram for NBI SDN controllers scenarios
+
+Let us assume that there is a device model called "foo.yang". The tree of the "foo.yang" model is shown in {{foo-tree-st}}.
+
+~~~~
+module: foo
+  +--rw foo?   empty
+~~~~
+{: #foo-tree-st title="Foo Tree Structure" artwork-align="center"}
+
+This document proposes the creation of a module that consists of a list of instances from the "foo.yang" model. To iterate through the list, a key named "devmod-name" must be defined, which will be a string. Additionally, the new model will import "foo.yang". Lastly, a container called "deployment" will encompass a list of network elements, with each element identified by the "ne-id" and having a "devmod-alias" as an alias for the "devmod-name" configuration in the network element.
+
+An example of the proposed structure {{foo-ntwdev-tree-st}}.
+
+~~~~
+module: foo-ntwdev
+  +--rw devmod-list* [devmod-name]
+     +--rw devmod-name    string
+     +--rw foo?           -> /foo:foo
+     +--rw deployment
+        +--rw ntw-elements* [ne-id]
+        |  +--rw ne-id           string
+        |  +--rw devmod-alias?   string
+        +--rw grp-ntw-elements* [grp-ne-id]
+           +--rw grp-ne-id       string
+           +--rw devmod-alias?   string
+~~~~
+{: #foo-ntwdev-tree-st title="Foo Tree Structure" artwork-align="center"}
+
+## YANG Model for NBI SDN controllers scenarios
+
+~~~~~~~~~~
+<CODE BEGINS> file example-foo-ntwdev.yang
+module foo-ntwdev {
+  namespace "urn:example:foo-ntwdev";
+  prefix "netdevfoo";
+
+  import foo {
+    prefix "foo";
+  }
+
+  organization "Example Organization";
+  contact "example@example.com";
+  description "YANG model for foo-dev.";
+  revision "2023-03-30" {
+    description "Initial revision.";
+    reference "RFC XXXX: YANG Model for foo-dev";
+  }
+
+  list devmod-list {
+    key "devmod-name";
+    description "List of foo.yang instances 2";
+
+    leaf devmod-name {
+      type string;
+      description "Name for the list.";
+    }
+
+    leaf foo {
+      type leafref {
+        path "/foo:foo";
+      }
+      description "Reference to foo leaf from foo.yang";
+    }
+
+    container deployment {
+      description "Deployment container.";
+
+      list ntw-elements {
+        key "ne-id";
+        description "List of network elements.";
+
+        leaf ne-id {
+          type string;
+          description "Network element identifier.";
+        }
+        leaf devmod-alias {
+          type string;
+          description "Device module alias for the deployment.";
+        }
+      }
+
+      list grp-ntw-elements {
+        key "grp-ne-id";
+        description "List of group of network elements.";
+
+        leaf grp-ne-id {
+          type string;
+          description "Group of network element identifier.";
+        }
+        leaf devmod-alias {
+          type string;
+          description "Device module alias for the deployment.";
+        }
+      }
+    }
+  }
+}
+
+<CODE ENDS>
+~~~~~~~~~~
 
 
 # Security Considerations
 
-TODO Security
+    The YANG module targeted in this document defines a schema for data that is designed to be accessed via network management protocols such as RESTCONF {{!RFC8040}}.  The lowest RESTCONF layer is HTTPS, and the mandatory-to-implement secure transport is TLS {{!RFC5246}}.
 
+   The NETCONF access control model {{!RFC6536}} provides the means to restrict access for particular NETCONF or RESTCONF users to a preconfigured subset of all available NETCONF or RESTCONF protocol operations and content.
+
+   There are a number of data nodes defined in this YANG module that are writable/creatable/deletable (i.e., config true, which is the default).  These data nodes may be considered sensitive or vulnerable   in some network environments.  Write operations (e.g., edit-config) to these data nodes without proper protection can have a negative effect on network operations.
 
 # IANA Considerations
 
-This document has no IANA actions.
+TBC
+
+
+# Implementation Status
+
+This section will be used to track the status of the implementations of the model. It is aimed at being removed if the document becomes RFC.
 
 
 --- back
