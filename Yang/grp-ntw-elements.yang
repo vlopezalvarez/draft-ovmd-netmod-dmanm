@@ -1,0 +1,45 @@
+module grp-ntw-elements {
+  namespace "urn:example:grp-ntw-elements";
+  prefix "grp";
+
+  organization
+    "IETF OPSA (Operations and Management Area) Working Group";
+  contact
+    "WG Web:  <https://datatracker.ietf.org/wg/opsawg/>
+    WG List:  <mailto:opsawg@ietf.org>
+    
+    Editor:   Oscar Gonzalez de Dios
+              <mailto:oscar.gonzalezdedios@telefonica.com>
+    Editor:   Mohamed Boucadair
+              <mohamed.boucadair@orange.com>
+    Editor:   Victor Lopez
+              <mailto:victor.lopez@nokia.com>
+    Editor:   Daniele Ceccarelli
+              <daniele.ietf@gmail.com>";
+
+  description "YANG model for group of network elements.";
+  revision "2023-05-19" {
+    description "Initial revision.";
+    reference "RFC XXXX: YANG Model for group of network elements";
+  }
+
+  list grp-ntw-elements {
+    key "grp-ne-id";
+    description "List of groups of network elements.";
+
+    leaf grp-ne-id {
+      type string;
+      description "Group of network element identifier.";
+    }
+
+    list ntw-elements {
+      key "ne-id";
+      description "List of network elements.";
+
+      leaf ne-id {
+        type string;
+        description "Network element identifier.";
+      }
+    }
+  }
+}
