@@ -105,7 +105,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 RFC Editor Note:
 Please replace XXXX with the RFC number assigned to this document if the document becomes a RFC. Please remove this note in that case.
 
-# Use cases
+# Use Cases
 
 ##  Device Config as a Service
 
@@ -121,11 +121,11 @@ By leveraging device models, network operators can design profile that represent
 
 This approach not only simplifies the configuration process but also reduces the likelihood of errors and misconfigurations, ultimately improving network stability and performance. Moreover, this process facilitates the lifecycle of the configurations enabling updating the profiles and, later, the network elements in a consistent manner across multiple network elements as a network-wide operation.
 
-# Guidelines to use device models in the NBI of SDN controllers
+# Guidelines to Use Device Models in the NBI of SDN Controllers
 
 This section outlines two key concepts for the guidelines on utilizing device models in the NBI of SDN controllers: (1) groups of network elements and (2) a YANG structure for extending device models to enable network-wide utilization.
 
-## Groups of network elements
+## Groups of Network Elements
 
 The management of groups of network elements is a requirement to cover the previous use cases. It is intended to have a YANG model to tag a group of network elements under the same identifier, so the operator can apply a given configuration in a set of devices. This document defines a module called "grp-ntw-elements", which provides a structured approach to represent and manipulate groups of network elements, enabling efficient network management and configuration.
 
@@ -140,7 +140,7 @@ module: grp-ntw-elements
 ~~~~
 {: #grp-ntw-elements-tree-st title="Group of network elements" artwork-align="center"}
 
-## YANG structure for extending the models
+## YANG Structure for Extending the Models
 
 The proposal of this work is to propose a structure to enable the reutilization of the device models in network scenarios. The objective is to create a YANG model with a list of instances referencing the device model and providing a nested structure to store deployment information for network elements associated with each instance in the list. The guideline is to follow the next structure in the list:
 
@@ -191,7 +191,59 @@ module: foo-ntwdev
 ~~~~
 {: #foo-ntwdev-tree-st title="Foo Tree Structure" artwork-align="center"}
 
-## YANG Model for NBI SDN controllers scenarios
+# YANG Model for NBI SDN Controllers Scenarios
+
+## Groups of Network Elements
+
+~~~~~~~~~~
+<CODE BEGINS>
+
+module grp-ntw-elements {
+  namespace "urn:example:grp-ntw-elements";
+  prefix "grp";
+
+  organization
+    "IETF OPSA (Operations and Management Area) Working Group";
+  contact
+    "WG Web:  <https://datatracker.ietf.org/wg/opsawg/>
+    WG List:  <mailto:opsawg@ietf.org>
+
+    Editor:   Oscar Gonzalez de Dios
+              <mailto:oscar.gonzalezdedios@telefonica.com>
+    Editor:   Victor Lopez
+              <mailto:victor.lopez@nokia.com>";
+
+  description "YANG model for group of network elements.";
+  revision "2023-07-07" {
+    description "Initial revision.";
+    reference "RFC XXXX: YANG Model for group of network elements";
+  }
+
+  list grp-ntw-elements {
+    key "grp-ne-id";
+    description "List of groups of network elements.";
+
+    leaf grp-ne-id {
+      type string;
+      description "Group of network element identifier.";
+    }
+
+    list ntw-elements {
+      key "ne-id";
+      description "List of network elements.";
+
+      leaf ne-id {
+        type string;
+        description "Network element identifier.";
+      }
+    }
+  }
+}
+
+<CODE ENDS>
+~~~~~~~~~~
+
+## Usage Example: Applying the Guidelines to the 'foo' Module"
 
 ~~~~~~~~~~
 <CODE BEGINS> file example-foo-ntwdev.yang
