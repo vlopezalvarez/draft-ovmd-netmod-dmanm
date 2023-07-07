@@ -267,11 +267,11 @@ module foo-ntwdev {
 
 # Security Considerations
 
-    The YANG module targeted in this document defines a schema for data that is designed to be accessed via network management protocols such as RESTCONF {{!RFC8040}}.  The lowest RESTCONF layer is HTTPS, and the mandatory-to-implement secure transport is TLS {{!RFC5246}}.
+The YANG module targeted in this document defines a schema for data that is designed to be accessed via network management protocols such as RESTCONF {{!RFC8040}}.  The lowest RESTCONF layer is HTTPS, and the mandatory-to-implement secure transport is TLS {{!RFC5246}}.
 
-   The NETCONF access control model {{!RFC6536}} provides the means to restrict access for particular NETCONF or RESTCONF users to a preconfigured subset of all available NETCONF or RESTCONF protocol operations and content.
+The NETCONF access control model {{!RFC6536}} provides the means to restrict access for particular NETCONF or RESTCONF users to a preconfigured subset of all available NETCONF or RESTCONF protocol operations and content.
 
-   There are a number of data nodes defined in this YANG module that are writable/creatable/deletable (i.e., config true, which is the default).  These data nodes may be considered sensitive or vulnerable   in some network environments.  Write operations (e.g., edit-config) to these data nodes without proper protection can have a negative effect on network operations.
+There are a number of data nodes defined in this YANG module that are writable/creatable/deletable (i.e., config true, which is the default). These data nodes may be considered sensitive or vulnerable   in some network environments. Write operations (e.g., edit-config) to these data nodes without proper protection can have a negative effect on network operations.
 
 # IANA Considerations
 
