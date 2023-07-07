@@ -10,15 +10,11 @@ module grp-ntw-elements {
     
     Editor:   Oscar Gonzalez de Dios
               <mailto:oscar.gonzalezdedios@telefonica.com>
-    Editor:   Mohamed Boucadair
-              <mohamed.boucadair@orange.com>
     Editor:   Victor Lopez
-              <mailto:victor.lopez@nokia.com>
-    Editor:   Daniele Ceccarelli
-              <daniele.ietf@gmail.com>";
+              <mailto:victor.lopez@nokia.com>";
 
   description "YANG model for group of network elements.";
-  revision "2023-05-19" {
+  revision "2023-07-07" {
     description "Initial revision.";
     reference "RFC XXXX: YANG Model for group of network elements";
   }

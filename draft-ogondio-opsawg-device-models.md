@@ -40,27 +40,27 @@ informative:
 
 --- abstract
 
-This document defines guidelines for a data model structure to reuse device models in the North-Bound Interface of the SDN controllers. The aim is to facilitate the reutilization of the device models in network scenarios.
+This document establishes guidelines for structuring a data model to facilitate the reuse of device models within the North-Bound Interface of SDN controllers. The objective is to enhance the reutilization of device models in various network scenarios.
 
 --- middle
 
 # Introduction
 
-Network operators require an effective management and configuration of network elements across their infrastructure. By implementing network-wide management and configuration practices, operators gain centralized control and visibility over their network elements, enabling them to streamline operations, monitor performance, and quickly respond to network events. Moreover, network-wide management allows for the enforcement of standardized policies and configurations, ensuring consistent behavior and reducing the risk of errors or misconfigurations that can lead to service disruptions. Additionally, it enables operators to implement proactive measures, such as performance optimization, load balancing, and security policies, across the entire network, fostering a more secure and efficient infrastructure.
+Network operators need to efficiently manage and configure network elements throughout their infrastructure. By implementing network-wide management and configuration practices, operators can achieve centralized control and visibility over their network elements. This enables them to streamline operations, monitor performance, and promptly respond to network events. Moreover, network-wide management facilitates the enforcement of standardized policies and configurations, ensuring consistent behavior and minimizing the risk of errors or misconfigurations that may result in service disruptions. Additionally, it enables operators to implement proactive actions, such as performance optimization, load balancing, and security policies across the entire network, fostering a more secure and efficient infrastructure.
 
-The availability of reusing device models play a crucial role in network management. Multiple organizations within the operator, such as network engineering, operations, and planning teams, can benefit from accessing these device models. These models serve as a common language for understanding and configuring network elements, ensuring consistency and interoperability across different teams and systems. Using the models from different teams is a key requirement for network operators.
+The ability of reusing device models play a crucial role in network management. Multiple teams within the operator, such as network engineering, operations, and planning, can benefit from accessing these device models. These models serve as a common language for understanding and configuring network elements, ensuring consistency and interoperability across different teams and systems. The utilization of models from various teams is a key requirement for network operators.
 
-The Internet Engineering Task Force (IETF) has made significant strides in defining device models to manage network element capabilities. These device models, often represented using YANG data modeling language, provide a structured, standardized approach to configure, monitor, and manage various network devices and their features. By leveraging YANG models, network operators can effectively manage the network element functionalities. These models not only simplify network management but also promote interoperability between different vendors and platforms, fostering a more efficient and robust networking ecosystem.
+The Internet Engineering Task Force (IETF) has made remarkable progress in defining device models to manage network element capabilities. These device models, often represented using YANG data modeling language, provide a structured, standardized approach to configure, monitor, and manage various network devices and their features. By leveraging YANG models, network operators can effectively manage the network element functionalities. These models not only streamline network management but also promote interoperability between different vendors and platforms, fostering a more efficient and robust networking ecosystem.
 
 Some examples of these network models are:
 
-* ietf-routing-policy {{!RFC8349}}: This YANG model defines a generic data model for managing routing policies that can be applied to various routing protocols. The model provides a framework for creating, modifying, and applying routing policies, which allows defining how routes are selected, filtered, and modified. The ietf-routing-policy model covers features like policy definition, policy attachment, route filters, and route actions.
+* ietf-routing-policy {{!RFC8349}}: This YANG model defines a generic data model for managing routing policies that can be applied to various routing protocols. The model provides a framework for creating, modifying, and applying routing policies, which allows defining how routes are selected, filtered, and modified. The "ietf-routing-policy" model covers features like policy definition, policy attachment, route filters, and route actions.
 
-* ietf-bgp-policy {{!I-D.ietf-idr-bgp-model}}: This YANG model defines a data model for the Border Gateway Protocol (BGP). The ietf-bgp-policy model is designed to configure and manage BGP routers and sessions, as well as provide a representation of BGP operational state data. The model covers BGP-specific features such as peer configuration, address families, route filters, and route actions. The model is intended to work alongside the ietf-routing-policy model to manage BGP routing policies.
+* ietf-bgp-policy {{!I-D.ietf-idr-bgp-model}}: This YANG model defines a data model for the Border Gateway Protocol (BGP). The "ietf-bgp-policy" model is designed to configure and manage BGP routers and sessions, as well as provide a representation of BGP operational state data. The model covers BGP-specific features such as peer configuration, address families, route filters, and route actions. The model is intended to work alongside the "ietf-routing-policy" model to manage BGP routing policies.
 
 * ietf-access-list {{!RFC8519}}: This YANG model provides a data model for configuring and managing network access control lists (ACLs). This model provides a generic structure for representing ACLs, along with the ability to define rules for permitting, denying, or assigning a specific action to matching packets.
 
-Software-Defined Networking (SDN) controllers facilitate seamless communication and coordination between high-level management systems and the underlying network infrastructure. This arrangement enables efficient translation of network-wide policies and objectives, defined by the Operations Support Systems (OSS), into granular, device-specific configurations and commands for the network elements. A similar concept applies for orchestration scenarios like in network slicing. Consequently, SDN controllers are typically placed as intermidiate entities between the OSS and the network elements. {{SDNsce}} represents this scenario.
+Software-Defined Networking (SDN) controllers facilitate seamless communication and coordination between high-level management systems and the underlying network infrastructure. This arrangement enables efficient translation of network-wide policies and objectives, defined by the Operations Support Systems (OSS), into granular, device-specific configurations and commands for the network elements. A similar concept applies for orchestration scenarios like in network slicing. Consequently, SDN controllers are typically placed as intermediate entities between the OSS and the network elements. {{SDNsce}} represents this scenario, where the SDN controller exposes its North-Bound Interface (NBI) to the OSS or orchestration layer.
 
 ~~~~
         +-----+  +------+
@@ -79,11 +79,11 @@ Software-Defined Networking (SDN) controllers facilitate seamless communication 
 ~~~~
 {: #SDNsce title='SDN scenario' artwork-align="center"}
 
-{{SDNsce}} illustrates the hierarchical relationship between the OSS, SDN controller and the network elements. Typically, the OSS serves as the central management system responsible for overseeing the entire network. Similarly, an orchestrator acts with a similar role in scenarios like network slicing. The SDN controller, positioned in the middle, acts as an intermediary, facilitating communication and coordination between the OSS and the network elements. The network elements at the bottom are directly controlled and configured by the SDN controller. This archicture enables efficient translation of high-level network policies into device-specific configurations, ultimately streamlining network management and decoupling the systems from the network evolution.
+{{SDNsce}} illustrates the hierarchical relationship between the OSS, SDN controller and the network elements. Typically, the OSS acts as the central management system responsible for overseeing the entire network. Similarly, an orchestrator acts with a similar role in scenarios like network slicing. The SDN controller, positioned in the middle, acts as an intermediary, facilitating communication and coordination between the OSS and the network elements. At the bottom, the network elements are directly controlled and configured by the SDN controller. This archicture enables efficient translation of high-level network policies into device-specific configurations, ultimately streamlining network management and decoupling the systems from the network evolution.
 
-Device models like ietf-routing-policy {{!RFC8349}}, ietf-bgp-policy {{I-D.ietf-idr-bgp-model}} or ietf-access-list {{!RFC8519}} were defined to be applicable in the South-Bound Interface (SBI)of the SDN controller. Therefore, they do not have network concepts to make them applicable in the North-Bound Interface (NBI) of the SDN controller.
+Device models like "ietf-routing-policy" {{!RFC8349}}, "ietf-bgp-policy" {{I-D.ietf-idr-bgp-model}} or "ietf-access-list" {{!RFC8519}} were defined to be applicable in the South-Bound Interface (SBI) of the SDN controller. Ts a result, these models do not inherently possess the necessary network concepts to make them directly applicable in the NBI of the SDN controller.
 
-The work in IETF can be directed to create network models for each device model or create a generic reusable structure for each model. This document proposes a reusable structure following the second approach.
+Within the scope of the IETF, efforts can be focused on two approaches when it comes to creating network models for device models. The first approach involves creating network models specific to each device model, while the second approach entails developing a generic and reusable structure for all models. This document puts forth a proposal for a reusable structure, aligning with the latter approach.
 
 ## Terminology and Notations
 
@@ -109,7 +109,7 @@ Please replace XXXX with the RFC number assigned to this document if the documen
 
 ##  Device Config as a Service
 
-Device Config as a Service involves the utilization of device models by an Operations Support System (OSS) to configure network elements through an SDN controller. In this scenario, the SDN controller acts as an intermediary between the OSS and the network elements, providing a configuration service for each network element.
+Device Config as a Service involves the utilization of device models by an OSS to configure network elements through an SDN controller. In this scenario, the SDN controller acts as an intermediary between the OSS and the network elements, providing a configuration service for each network element.
 
 By leveraging device models, the OSS gains a common representation of the network elements' capabilities and configuration parameters. These device models define the desired configuration for specific functionalities, such as ACLs or routing policies. The OSS utilizes these device models to define the desired configuration for each network element.
 
@@ -121,15 +121,15 @@ By leveraging device models, network operators can design profile that represent
 
 This approach not only simplifies the configuration process but also reduces the likelihood of errors and misconfigurations, ultimately improving network stability and performance. Moreover, this process facilitates the lifecycle of the configurations enabling updating the profiles and, later, the network elements in a consistent manner across multiple network elements as a network-wide operation.
 
-# Guidelines to use device models in the North-Bound Interface of SDN controllers
+# Guidelines to use device models in the NBI of SDN controllers
+
+This section outlines two key concepts for the guidelines on utilizing device models in the NBI of SDN controllers: (1) groups of network elements and (2) a YANG structure for extending device models to enable network-wide utilization.
 
 ## Groups of network elements
 
 The management of groups of network elements is a requirement to cover the previous use cases. It is intended to have a YANG model to tag a group of network elements under the same identifier, so the operator can apply a given configuration in a set of devices. This document defines a module called "grp-ntw-elements", which provides a structured approach to represent and manipulate groups of network elements, enabling efficient network management and configuration.
 
-The "grp-ntw-elements" module defines a YANG model for representing a group of network elements. Within the module, there is a list called "grp-ntw-elements" that serves as a container for defining groups of network elements. Each group is uniquely identified by the "grp-ne-id" leaf, which has a string data type and represents the group's identifier.
-
-The "grp-ntw-elements" list includes a nested list called "ntw-elements" to specify the individual network elements within each group. The "ntw-elements" list has a key of "ne-id" to uniquely identify each network element. The "ne-id" leaf represents the identifier of each network element and has a string data type.
+The "grp-ntw-elements" module defines a YANG model for representing a group of network elements. Within the module, there is a list called "grp-ntw-elements" that includes the groups of network elements. Each group is uniquely identified by the "grp-ne-id" leaf, which has a string data type and represents the group's identifier. The "grp-ntw-elements" list has a nested list called "ntw-elements" to specify the individual network elements within each group. The "ntw-elements" list has a key of "ne-id" to uniquely identify each network element. The "ne-id" leaf represents the identifier of each network element and has a string data type.
 
 ~~~~
 module: grp-ntw-elements
@@ -143,18 +143,26 @@ module: grp-ntw-elements
 ## YANG structure for extending the models
 
 The proposal of this work is to propose a structure to enable the reutilization of the device models in network scenarios. The objective is to create a YANG model with a list of instances referencing the device model and providing a nested structure to store deployment information for network elements associated with each instance in the list. The guideline is to follow the next structure in the list:
+
 * A key called devmod-name representing the name for each entry in the list.
+
 * A leaf named devmod-name of type string that serves as a string identifier for the list entry.
+
 * An import of the device model.
+
 * A container named deployment that includes:
+
 + A list called ntw-elements with the following elements:
+
 + A leaf named ne-id of type string that serves as the network element identifier (which is the key).
-+ A leaf named devmod-alias of type string that serves as the device module alias for the deployment.
-+ A list called grp-ntw-elements with the following elements:
-+ A leaf named grp-ne-id of type string that serves as the network element identifier (which is the key).
+
 + A leaf named devmod-alias of type string that serves as the device module alias for the deployment.
 
-## Tree Diagram for NBI SDN controllers scenarios
++ A list called grp-ntw-elements with the following elements:
+
++ A leaf named grp-ne-id of type string that serves as the network element identifier (which is the key).
+
++ A leaf named devmod-alias of type string that serves as the device module alias for the deployment.
 
 Let us assume that there is a device model called "foo.yang". The tree of the "foo.yang" model is shown in {{foo-tree-st}}.
 

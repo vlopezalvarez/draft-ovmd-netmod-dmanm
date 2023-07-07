@@ -9,7 +9,7 @@ module foo-ntwdev {
   organization "Example Organization";
   contact "example@example.com";
   description "YANG model for foo-dev.";
-  revision "2023-03-30" {
+  revision "2023-07-07" {
     description "Initial revision.";
     reference "RFC XXXX: YANG Model for foo-dev";
   }
