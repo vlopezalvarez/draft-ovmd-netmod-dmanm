@@ -12,9 +12,9 @@ v: 3
 area: "Operations and Management"
 workgroup: "Operations and Management Area Working Group"
 keyword:
- - next generation
- - unicorn
- - sparkling distributed ledger
+ - Device models
+ - Network models
+
 venue:
   group: "Operations and Management Area Working Group"
   type: "Working Group"
@@ -77,7 +77,7 @@ Software-Defined Networking (SDN) controllers facilitate seamless communication 
   | NE1 | | NE2 | | NE3 |
   +-----+ +-----+ +-----+
 ~~~~
-{: #SDNsce title='SDN scenario' artwork-align="center"}
+{: #SDNsce title='SDN Scenario' artwork-align="center"}
 
 {{SDNsce}} illustrates the hierarchical relationship between the OSS, SDN controller and the network elements. Typically, the OSS acts as the central management system responsible for overseeing the entire network. Similarly, an orchestrator acts with a similar role in scenarios like network slicing. The SDN controller, positioned in the middle, acts as an intermediary, facilitating communication and coordination between the OSS and the network elements. At the bottom, the network elements are directly controlled and configured by the SDN controller. This archicture enables efficient translation of high-level network policies into device-specific configurations, ultimately streamlining network management and decoupling the systems from the network evolution.
 
@@ -138,7 +138,7 @@ module: grp-ntw-elements
      +--rw ntw-elements* [ne-id]
         +--rw ne-id    string
 ~~~~
-{: #grp-ntw-elements-tree-st title="Group of network elements" artwork-align="center"}
+{: #grp-ntw-elements-tree-st title="Group of Network Elements" artwork-align="center"}
 
 ## YANG Structure for Extending the Models
 
@@ -189,7 +189,7 @@ module: foo-ntwdev
            +--rw grp-ne-id       string
            +--rw devmod-alias?   string
 ~~~~
-{: #foo-ntwdev-tree-st title="Foo Tree Structure" artwork-align="center"}
+{: #foo-ntwdev-tree-st title="Usage Example for 'foo' Module" artwork-align="center"}
 
 # YANG Model for NBI SDN Controllers Scenarios
 
