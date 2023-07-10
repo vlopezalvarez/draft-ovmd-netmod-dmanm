@@ -85,6 +85,8 @@ Device models like "ietf-routing-policy" {{!RFC8349}}, "ietf-bgp-policy" {{I-D.i
 
 Within the scope of the IETF, efforts can be focused on two approaches when it comes to creating network models for device models. The first approach involves creating network models specific to each device model, while the second approach entails developing a generic and reusable structure for all models. This document puts forth a proposal for a reusable structure, aligning with the latter approach.
 
+The YANG data model defined in this document conforms to the Network Management Datastore Architecture (NMDA).
+
 ## Terminology and Notations
 
 TBD
@@ -142,11 +144,7 @@ module: grp-ntw-elements
 
 ## YANG Structure for Extending the Models
 
-The proposal of this work is to propose a structure to enable the reutilization of the device models in network scenarios. The objective is to create a YANG model with a list of instances referencing the device model and providing a nested structure to store deployment information for network elements associated with each instance in the list. The guideline is to follow the next structure in the list:
-
-* A key called devmod-name representing the name for each entry in the list.
-
-* A leaf named devmod-name of type string that serves as a string identifier for the list entry.
+The proposal of this work is to propose a structure to enable the reutilization of the device models in network scenarios. The objective is to create a YANG model with the device model and providing a nested structure to store deployment information for network elements associated with each instance in the list. The guideline is to follow the next structure in the list:
 
 * An import of the device model.
 
@@ -258,56 +256,46 @@ module foo-ntwdev {
   organization "Example Organization";
   contact "example@example.com";
   description "YANG model for foo-dev.";
-  revision "2023-03-30" {
+  revision "2023-07-07" {
     description "Initial revision.";
     reference "RFC XXXX: YANG Model for foo-dev";
   }
 
-  list devmod-list {
-    key "devmod-name";
-    description "List of foo.yang instances 2";
+  leaf foo {
+    type leafref {
+      path "/foo:foo";
+    }
+    description "Reference to foo leaf from foo.yang";
+  }
 
-    leaf devmod-name {
-      type string;
-      description "Name for the list.";
+  container deployment {
+    description "Deployment container.";
+
+    list ntw-elements {
+      key "ne-id";
+      description "List of network elements.";
+
+      leaf ne-id {
+        type string;
+        description "Network element identifier.";
+      }
+      leaf devmod-alias {
+        type string;
+        description "Device module alias for the deployment.";
+      }
     }
 
-    leaf foo {
-      type leafref {
-        path "/foo:foo";
+    list grp-ntw-elements {
+      key "grp-ne-id";
+      description "List of group of network elements.";
+
+      leaf grp-ne-id {
+        type string;
+        description "Group of network element identifier.";
       }
-      description "Reference to foo leaf from foo.yang";
-    }
-
-    container deployment {
-      description "Deployment container.";
-
-      list ntw-elements {
-        key "ne-id";
-        description "List of network elements.";
-
-        leaf ne-id {
-          type string;
-          description "Network element identifier.";
-        }
-        leaf devmod-alias {
-          type string;
-          description "Device module alias for the deployment.";
-        }
-      }
-
-      list grp-ntw-elements {
-        key "grp-ne-id";
-        description "List of group of network elements.";
-
-        leaf grp-ne-id {
-          type string;
-          description "Group of network element identifier.";
-        }
-        leaf devmod-alias {
-          type string;
-          description "Device module alias for the deployment.";
-        }
+      leaf devmod-alias {
+        type string;
+        description "Device module alias for the deployment.";
       }
     }
   }

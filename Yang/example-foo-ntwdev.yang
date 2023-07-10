@@ -14,51 +14,41 @@ module foo-ntwdev {
     reference "RFC XXXX: YANG Model for foo-dev";
   }
 
-  list devmod-list {
-    key "devmod-name";
-    description "List of foo.yang instances 2";
+  leaf foo {
+    type leafref {
+      path "/foo:foo";
+    }
+    description "Reference to foo leaf from foo.yang";
+  }
 
-    leaf devmod-name {
-      type string;
-      description "Name for the list.";
+  container deployment {
+    description "Deployment container.";
+
+    list ntw-elements {
+      key "ne-id";
+      description "List of network elements.";
+
+      leaf ne-id {
+        type string;
+        description "Network element identifier.";
+      }
+      leaf devmod-alias {
+        type string;
+        description "Device module alias for the deployment.";
+      }
     }
 
-    leaf foo {
-      type leafref {
-        path "/foo:foo";
+    list grp-ntw-elements {
+      key "grp-ne-id";
+      description "List of group of network elements.";
+
+      leaf grp-ne-id {
+        type string;
+        description "Group of network element identifier.";
       }
-      description "Reference to foo leaf from foo.yang";
-    }
-
-    container deployment {
-      description "Deployment container.";
-
-      list ntw-elements {
-        key "ne-id";
-        description "List of network elements.";
-
-        leaf ne-id {
-          type string;
-          description "Network element identifier.";
-        }
-        leaf devmod-alias {
-          type string;
-          description "Device module alias for the deployment.";
-        }
-      }
-
-      list grp-ntw-elements {
-        key "grp-ne-id";
-        description "List of group of network elements.";
-
-        leaf grp-ne-id {
-          type string;
-          description "Group of network element identifier.";
-        }
-        leaf devmod-alias {
-          type string;
-          description "Device module alias for the deployment.";
-        }
+      leaf devmod-alias {
+        type string;
+        description "Device module alias for the deployment.";
       }
     }
   }
