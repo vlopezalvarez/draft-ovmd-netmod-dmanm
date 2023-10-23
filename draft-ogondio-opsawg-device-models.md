@@ -3,7 +3,7 @@ title: "An Approach to Expose 'Device Models'-as-'Network Models'"
 abbrev: "DMaNM"
 category: info
 
-docname: draft-ogondio-opsawg-device-models-latest
+docname: draft-ogondio-opsawg-dmanm-latest
 submissiontype: IETF  # also: "independent", "IAB", or "IRTF"
 number:
 date:
@@ -20,8 +20,8 @@ venue:
   type: "Working Group"
   mail: "opsawg@ietf.org"
   arch: "https://mailarchive.ietf.org/arch/browse/opsawg/"
-  github: "vlopezalvarez/draft-ogondio-opsawg-device-models"
-  latest: "https://vlopezalvarez.github.io/draft-ogondio-opsawg-device-models/draft-ogondio-opsawg-device-models.html"
+  github: "vlopezalvarez/draft-ogondio-opsawg-dmanm"
+  latest: "https://vlopezalvarez.github.io/draft-ogondio-opsawg-dmanm/draft-ogondio-opsawg-dmanm.html"
 
 author:
  -

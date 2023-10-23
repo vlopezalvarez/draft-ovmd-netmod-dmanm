@@ -2,16 +2,16 @@
 
 This is the working area for the individual Internet-Draft, "An Approach to Expose 'Device Models'-as-'Network Models'".
 
-* [Editor's Copy](https://vlopezalvarez.github.io/draft-ogondio-opsawg-device-models/#go.draft-ogondio-opsawg-device-models.html)
-* [Datatracker Page](https://datatracker.ietf.org/doc/draft-ogondio-opsawg-device-models)
-* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-ogondio-opsawg-device-models)
-* [Compare Editor's Copy to Individual Draft](https://vlopezalvarez.github.io/draft-ogondio-opsawg-device-models/#go.draft-ogondio-opsawg-device-models.diff)
+* [Editor's Copy](https://vlopezalvarez.github.io/draft-ogondio-opsawg-dmanm/#go.draft-ogondio-opsawg-dmanm.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-ogondio-opsawg-dmanm)
+* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-ogondio-opsawg-dmanm)
+* [Compare Editor's Copy to Individual Draft](https://vlopezalvarez.github.io/draft-ogondio-opsawg-dmanm/#go.draft-ogondio-opsawg-dmanm.diff)
 
 
 ## Contributing
 
 See the
-[guidelines for contributions](https://github.com/vlopezalvarez/draft-ogondio-opsawg-device-models/blob/main/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/vlopezalvarez/draft-ogondio-opsawg-dmanm/blob/main/CONTRIBUTING.md).
 
 Contributions can be made by creating pull requests.
 The GitHub interface supports creating pull requests using the Edit (✏) button.
