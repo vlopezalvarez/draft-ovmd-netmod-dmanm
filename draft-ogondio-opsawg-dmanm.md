@@ -64,7 +64,7 @@ Some examples of these device models are:
 
 * "ietf-access-list" {{!RFC8519}}: This YANG model provides a data model for configuring and managing network access control lists (ACLs). This model provides a generic structure for representing ACLs, along with the ability to define rules for permitting, denying, or assigning a specific action to matching packets.
 
-Software-Defined Networking (SDN) {{?RFC7149}}{{?RFC7426}} controllers facilitate seamless communication and coordination between high-level management systems and the underlying network infrastructure. This arrangement enables efficient translation of network-wide policies and objectives, defined by the Operations Support Systems (OSS), into granular, device-specific configurations and commands for the network elements. A similar concept applies for orchestration scenarios like in network slicing. Consequently, SDN controllers are typically placed as intermediate entities between the OSS and the network elements. {{SDNsce}} represents this scenario, where the SDN controller exposes its customer-facing interface to the OSS or orchestration layer.
+Software-Defined Networking (SDN) {{!RFC7149}}{{!RFC7426}} controllers facilitate seamless communication and coordination between high-level management systems and the underlying network infrastructure. This arrangement enables efficient translation of network-wide policies and objectives, defined by the Operations Support Systems (OSS), into granular, device-specific configurations and commands for the network elements. A similar concept applies for orchestration scenarios like in network slicing. Consequently, SDN controllers are typically placed as intermediate entities between the OSS and the network elements. {{SDNsce}} represents this scenario, where the SDN controller exposes its customer-facing interface to the OSS or orchestration layer.
 
 ~~~~
         +-----+  +------+
@@ -97,19 +97,19 @@ The YANG data model defined in this document conforms to the Network Management 
 
 ## Terminology and Notations
 
-The document uses the following terms from {{?RFC8309}} and {{?RFC8969}}:
+The document uses the following terms from {{!RFC8309}} and {{!RFC8969}}:
 
 Service Model:
 : Describes a service and the parameters of the service in a portable way that can be used uniformly and independent of the equipment and operating environment.
-: Examples of service models are the L3VPN Service Model (L3SM) {{?RFC8299}} and the L2VPN Service Model (L2SM) {{?RFC8466}}.
+: Examples of service models are the L3VPN Service Model (L3SM) {{!RFC8299}} and the L2VPN Service Model (L2SM) {{!RFC8466}}.
 
 Network Model:
-: Describes a network-level abstraction (or a subset of aspects of a network infrastructure), including devices and their subsystems, and relevant protocols operating at the link and network layers across multiple devices. This model corresponds to the network configuration model discussed in {{?RFC8309}}. : It can be used by a network operator to allocate resources (e.g., tunnel resource, topology resource) for the service or schedule resources to meet the service requirements defined in a service model.
-: Examples of network models are the L3VPN Network Model (L3NM) {{?RFC9182}} or the L2VPN Network Model (L2NM) {{?RFC9291}}.
+: Describes a network-level abstraction (or a subset of aspects of a network infrastructure), including devices and their subsystems, and relevant protocols operating at the link and network layers across multiple devices. This model corresponds to the network configuration model discussed in {{!RFC8309}}. : It can be used by a network operator to allocate resources (e.g., tunnel resource, topology resource) for the service or schedule resources to meet the service requirements defined in a service model.
+: Examples of network models are the L3VPN Network Model (L3NM) {{!RFC9182}} or the L2VPN Network Model (L2NM) {{!RFC9291}}.
 
 Device Model:
-: Refers to the Network Element YANG data model described in {{?RFC8199}} or the device configuration model discussed in {{?RFC8309}}.
-: Device models are also used to refer to model a function embedded in a device (e.g., Access Control Lists (ACLs) {{?RFC8519}}).
+: Refers to the Network Element YANG data model described in {{!RFC8199}} or the device configuration model discussed in {{!RFC8309}}.
+: Device models are also used to refer to model a function embedded in a device (e.g., Access Control Lists (ACLs) {{!RFC8519}}).
 
 ## Requirements Language
 
