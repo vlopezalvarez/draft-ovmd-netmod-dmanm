@@ -121,11 +121,9 @@ Device Model:
 
 | Prefix  | Yang Module            | Reference    |
 | ------  | ---------------------- | ------------ |
-| ntwdev  | ietf-network-device    | RFCXXX       |
+| xxxx  |xxxx    | xxx      |
 {: #tab-prefixes title="Prefixes and corresponding YANG modules"}
 
-RFC Editor Note:
-Please replace XXXX with the RFC number assigned to this document. Please remove this note in that case.
 
 # Sample Use Cases
 
