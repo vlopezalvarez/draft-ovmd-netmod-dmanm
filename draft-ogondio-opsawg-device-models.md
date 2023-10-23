@@ -133,6 +133,8 @@ The management of groups of network elements is a requirement to cover the previ
 
 The "grp-ntw-elements" module defines a YANG model for representing a group of network elements. Within the module, there is a list called "grp-ntw-elements" that includes the groups of network elements. Each group is uniquely identified by the "grp-ne-id" leaf, which has a string data type and represents the group's identifier. The "grp-ntw-elements" list has a nested list called "ntw-elements" to specify the individual network elements within each group. The "ntw-elements" list has a key of "ne-id" to uniquely identify each network element. The "ne-id" leaf represents the identifier of each network element and has a string data type.
 
+{{grp-ntw-elements-tree-st}} represents the tree of the proposed YANG model. Tree diagrams used in this document follow the notation defined in {{!RFC8340}}.
+
 ~~~~
 module: grp-ntw-elements
   +--rw grp-ntw-elements* [grp-ne-id]
