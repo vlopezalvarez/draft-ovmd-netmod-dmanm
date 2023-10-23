@@ -1,6 +1,6 @@
 ---
 title: "An Approach to Expose 'Device Models'-as-'Network Models'"
-abbrev: "DMaaNM"
+abbrev: "DMaNM"
 category: info
 
 docname: draft-ogondio-opsawg-device-models-latest
@@ -32,6 +32,10 @@ author:
     fullname: Victor Lopez
     organization: Nokia
     email: "victor.lopez@nokia.com"
+ -
+    fullname: Mohamed Boucadair
+    organization: Orange
+    email: "mohamed.boucadair@orange.com"
 
 normative:
 
@@ -40,7 +44,7 @@ informative:
 
 --- abstract
 
-This document deescribes an appraoch for exposing Device Models as Network Models (DMaaNM). In particular, this documeent provides guidance for structuring a data model to facilitate the reuse of device models within the customer-facing interface of Software-Defined Networking (SDN) controllers. The objective of this approach is to enhance the reusability of device models in various network scenarios and ease the mapping between network/service models with device models.
+This document describes an approach for exposing Device Models as Network Models (DMaNM). In particular, this document provides guidance for structuring a data model to facilitate the reuse of device models within the customer-facing interface of Software-Defined Networking (SDN) controllers. The objective of this approach is to enhance the reusability of device models in various network scenarios and ease the mapping between network/service models with device models.
 
 --- middle
 
@@ -207,12 +211,12 @@ module: foo-ntwdev
 ~~~~
 {: #foo-ntwdev-tree-st title="Usage Example for 'foo' Module" artwork-align="center"}
 
-# DMaaNM YANG Model
+# DMaNM YANG Model
 
 ## Groups of Network Elements
 
 ~~~~~~~~~~
-<CODE BEGINS> file "grp-ntw-elements@2023-07-07.yang"
+<CODE BEGINS> file "grp-ntw-elements@2023-10-23.yang"
 
 module grp-ntw-elements {
   yang-version 1.1;
@@ -228,11 +232,13 @@ module grp-ntw-elements {
     Editor:   Oscar Gonzalez de Dios
               <mailto:oscar.gonzalezdedios@telefonica.com>
     Editor:   Victor Lopez
-              <mailto:victor.lopez@nokia.com>";
+              <mailto:victor.lopez@nokia.com>
+    Editor:   Mohamed Boucadair
+              <mailto:mohamed.boucadair@orange.com>";
 
   description "YANG model for group of network elements.";
 
-  revision "2023-07-07" {
+  revision "2023-10-23" {
     description "Initial revision.";
     reference "RFC XXXX: An Approach to Expose 'Device Models'
                          -as-'Network Models'";
@@ -275,7 +281,7 @@ module foo-ntwdev {
   organization "Example Organization";
   contact "example@example.com";
   description "YANG model for foo-dev.";
-  revision "2023-07-07" {
+  revision "2023-10-23" {
     description "Initial revision.";
     reference "RFC XXXX: YANG Model for foo-dev";
   }

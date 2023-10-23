@@ -11,15 +11,17 @@ module grp-ntw-elements {
     Editor:   Oscar Gonzalez de Dios
               <mailto:oscar.gonzalezdedios@telefonica.com>
     Editor:   Victor Lopez
-              <mailto:victor.lopez@nokia.com>";
+              <mailto:victor.lopez@nokia.com>
+    Editor:   Mohamed Boucadair
+              <mailto:mohamed.boucadair@orange.com>";
 
   description "YANG model for group of network elements.";
-  revision "2023-07-07" {
+  revision "2023-10-23" {
     description "Initial revision.";
     reference "RFC XXXX: YANG Model for group of network elements";
   }
 
-  list grp-ntw-elements {
+  list grp-ntw-element {
     key "grp-ne-id";
     description "List of groups of network elements.";
 
@@ -28,7 +30,7 @@ module grp-ntw-elements {
       description "Group of network element identifier.";
     }
 
-    list ntw-elements {
+    list ntw-element {
       key "ne-id";
       description "List of network elements.";
 

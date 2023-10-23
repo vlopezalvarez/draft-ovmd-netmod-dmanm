@@ -1,6 +1,6 @@
-# Guidelines to use device models in the North-Bound Interface of SDN controllers
+# An Approach to Expose 'Device Models'-as-'Network Models'
 
-This is the working area for the individual Internet-Draft, "Guidelines to use device models in the North-Bound Interface of SDN controllers".
+This is the working area for the individual Internet-Draft, "An Approach to Expose 'Device Models'-as-'Network Models'".
 
 * [Editor's Copy](https://vlopezalvarez.github.io/draft-ogondio-opsawg-device-models/#go.draft-ogondio-opsawg-device-models.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-ogondio-opsawg-device-models)

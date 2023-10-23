@@ -9,7 +9,7 @@ module foo-ntwdev {
   organization "Example Organization";
   contact "example@example.com";
   description "YANG model for foo-dev.";
-  revision "2023-07-07" {
+  revision "2023-10-23" {
     description "Initial revision.";
     reference "RFC XXXX: YANG Model for foo-dev";
   }
@@ -24,7 +24,7 @@ module foo-ntwdev {
   container deployment {
     description "Deployment container.";
 
-    list ntw-elements {
+    list ntw-element {
       key "ne-id";
       description "List of network elements.";
 
@@ -38,7 +38,7 @@ module foo-ntwdev {
       }
     }
 
-    list grp-ntw-elements {
+    list grp-ntw-element {
       key "grp-ne-id";
       description "List of group of network elements.";
 
