@@ -1,0 +1,109 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2024-04-04T01:15:28.125999+00:00",
+  "repo": "vlopezalvarez/draft-ogondio-opsawg-dmanm",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOJ4N0Cs5dhWof",
+      "title": "An Approach to Expose 'Device Models'-as-'Network Models'",
+      "url": "https://github.com/vlopezalvarez/draft-ogondio-opsawg-dmanm/pull/1",
+      "state": "MERGED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-23T11:54:38Z",
+      "updatedAt": "2023-10-23T13:33:18Z",
+      "baseRepository": "vlopezalvarez/draft-ogondio-opsawg-dmanm",
+      "baseRefName": "main",
+      "baseRefOid": "ed096ddac992710cac74611c4edac797624a3a32",
+      "headRepository": "vlopezalvarez/draft-ogondio-opsawg-dmanm",
+      "headRefName": "boucadair-patch-1",
+      "headRefOid": "b9ef7bd829a8c2d7501935551798b88fcf6558a8",
+      "closedAt": "2023-10-23T13:33:18Z",
+      "mergedAt": "2023-10-23T13:33:18Z",
+      "mergedBy": "vlopezalvarez",
+      "mergeCommit": {
+        "oid": "36b72a48e372229d1e2e307f0009030bf8471a00"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 2,
+      "id": "PR_kwDOJ4N0Cs5disnd",
+      "title": "ntwdev is only an example",
+      "url": "https://github.com/vlopezalvarez/draft-ogondio-opsawg-dmanm/pull/2",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-23T15:00:43Z",
+      "updatedAt": "2023-10-23T15:00:45Z",
+      "baseRepository": "vlopezalvarez/draft-ogondio-opsawg-dmanm",
+      "baseRefName": "main",
+      "baseRefOid": "9fa10c2df900dee66c72dbd984b3fcff96f96075",
+      "headRepository": "vlopezalvarez/draft-ogondio-opsawg-dmanm",
+      "headRefName": "boucadair-patch-2",
+      "headRefOid": "ee7af708d16d731ebc32426032a7e39b349d86f8",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    }
+  ]
+}

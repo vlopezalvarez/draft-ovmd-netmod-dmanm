@@ -1,0 +1,1819 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
+<title>An Approach to Expose 'Device Models'-as-'Network Models'</title>
+<meta content="Oscar Gonzalez de Dios" name="author">
+<meta content="Victor Lopez" name="author">
+<meta content="Mohamed Boucadair" name="author">
+<meta content="
+       This document describes an approach for exposing Device Models as Network Models (DMaNM). In particular, this document provides guidance for structuring a data model to facilitate the reuse of device models within the customer-facing interface of Software-Defined Networking (SDN) controllers. The objective of this approach is to enhance the reusability of device models in various network scenarios and ease the mapping between network/service models with device models. 
+    " name="description">
+<meta content="xml2rfc 3.18.2" name="generator">
+<meta content="Device models" name="keyword">
+<meta content="Network models" name="keyword">
+<meta content="draft-ogondio-opsawg-dmanm-latest" name="ietf.draft">
+<!-- Generator version information:
+  xml2rfc 3.18.2
+    Python 3.11.6
+    ConfigArgParse 1.5.3
+    google-i18n-address 3.1.0
+    intervaltree 3.1.0
+    Jinja2 3.1.2
+    lxml 4.9.3
+    platformdirs 3.11.0
+    pycountry 22.3.5
+    PyYAML 6.0
+    requests 2.31.0
+    setuptools 67.7.2
+    six 1.16.0
+    wcwidth 0.2.8
+-->
+<link href="draft-ogondio-opsawg-dmanm.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
+<style type="text/css">@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Lora SemiBold'), local('Lora-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Cabin Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Cabin Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Cabin Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  color-scheme: light dark;
+  --background-color: #fff;
+  --text-color: #222;
+  --title-color: #191919;
+  --link-color: #2a6496;
+  --highlight-color: #f9f9f9;
+  --line-color: #eee;
+  --pilcrow-weak: #ddd;
+  --pilcrow-strong: #bbb;
+  --small-font-size: 14.5px;
+  --font-mono: 'Oxygen Mono', monospace;
+  scrollbar-color: #bbb #eee;
+}
+body {
+  max-width: 600px;
+  margin: 75px auto;
+  padding: 0 5px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font: 16px/22px "Lora", serif;
+  scroll-behavior: smooth;
+}
+
+.ears {
+  display: none;
+}
+
+/* headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Cabin Condensed", sans-serif;
+  font-weight: 600;
+  margin: 0.8em 0 0.3em;
+  font-size-adjust: 0.5;
+  color: var(--title-color);
+}
+h1#title {
+  font-size: 32px;
+  line-height: 40px;
+  clear: both;
+}
+h1#title, h1#rfcnum {
+  margin: 1.5em 0 0.2em;
+}
+h1#rfcnum + h1#title {
+  margin: 0.2em 0;
+}
+
+h1, h2, h3 {
+  font-size: 22px;
+  line-height: 27px;
+}
+h4, h5, h6 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+/* general structure */
+.author {
+  padding-bottom: 0.3em;
+}
+#abstract+p {
+  font-size: 18px;
+  line-height: 24px;
+}
+#abstract+p code, #abstract+p samp, #abstract+p tt {
+  font-size: 16px;
+  line-height: 0;
+}
+
+p {
+  padding: 0;
+  margin: 0.5em 0;
+  text-align: left;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+/* font-family isn't space-separated, but =~ will have to do */
+svg[font-family~="monospace" i], svg [font-family~="monospace" i] {
+  font-family: var(--font-mono);
+}
+.alignCenter.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  border: none;
+  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+     support flexbox yet.
+  */
+  display: table;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 0.5em 2em;
+}
+:is(ol, ul) :is(ol, ul) {
+  margin-left: 1em;
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+.ulCompact li {
+  margin: 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+}
+ul.empty li, .ulEmpty li {
+  margin-top: 0.5em;
+}
+:is(ul, ol).compact, .ulCompact, .olCompact {
+  line-height: 1;
+  margin: 0 0 0 2em;
+}
+
+/* definition lists */
+dl {
+  clear: left;
+  --indent: 3ch;
+  /* --indent: attr(indent ch); not supported in any browser, but we can dream */
+}
+dl.olPercent {
+  --indent: 5ch;
+}
+dl > dt {
+  float: left;
+  margin-right: 2ch;
+  min-width: 8ch;
+}
+dl.dlNewline > dt {
+  float: none;
+}
+dl > dd {
+  margin-bottom: .8em;
+  margin-left: var(--indent) !important; /* stupid element overrides */
+  min-height: 2ex;
+}
+dl.olPercent > dt {
+  min-width: calc(var(--indent) - 2ch);
+}
+:is(dl.compact, .dlCompact) > dd {
+  margin-bottom: 0;
+}
+:is(dl.compact, .dlCompact) > dd > :is(:first-child, .break:first-child + *) {
+  margin-top: 0;
+}
+:is(dl.compact, .dlCompact) > dd > :is(:last-child) {
+  margin-bottom: 0;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+}
+:is(dd, span).break {
+  display: none;
+}
+
+/* links */
+a, a[href].selfRef:hover {
+  text-decoration: none;
+}
+a[href] {
+  color: var(--link-color);
+}
+a[href].selfRef, .iref + a[href].internal {
+  color: var(--text-color);
+}
+a[href]:hover {
+  text-decoration: underline;
+}
+a[href].selfRef:hover {
+  background-color: var(--highlight-color);
+}
+a.xref:is(.cite, .auto), :is(#status-of-memo, #copyright) a {
+  white-space: nowrap;
+}
+
+/* Figures */
+tt, code, pre {
+  background-color: var(--highlight-color);
+  font: 14px/22px var(--font-mono);
+}
+tt, code {
+  /* changing the font for inline elements leads to different ascender
+     and descender heights; as we want to retain baseline alignment,
+     remove leading to avoid altering the final height of lines
+     note: this fails if these blocks take an entire line,
+     a different solution would be great */
+  line-height: 0;
+}
+:is(h1, h2, h3, h4, h5, h6) :is(tt, code) {
+  font-size: 84%;
+}
+pre {
+  border: 1px solid var(--line-color);
+  font-size: 13.5px;
+  line-height: 16px;
+  letter-spacing: -0.2px;
+  margin: 5px;
+  padding: 5px;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0.5em 0;
+  padding: 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption, caption {
+  font-style: italic;
+  margin: 0.5em 1.5em;
+  text-align: left;
+}
+@media screen {
+  /* Auto-collapse boilerplate. */
+  :is(#status-of-memo, #copyright) p {
+    margin: -2px 0;
+    max-height: 0;
+    transition: max-height 2s ease, margin 0.5s ease 0.5s;
+    overflow: hidden;
+  }
+  :is(#status-of-memo, #copyright):hover p,
+  :is(#status-of-memo, #copyright) h2:target ~ p {
+    margin: 0.5em 0;
+    max-height: 500px;
+    overflow: auto;
+  }
+  pre, svg {
+    display: inline-block;
+    overflow-x: auto;
+  }
+  pre {
+    max-width: 100%;
+    width: calc(100% - 22px - 1em);
+  }
+  svg {
+    max-width: calc(100% - 22px - 1em);
+  }
+  figure pre {
+    display: block;
+    width: calc(100% - 25px);
+  }
+  :is(pre, svg) + .pilcrow {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding-bottom: 8px;
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 0 2em;
+  font-style: italic;
+}
+blockquote {
+  margin: 1em 0;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  max-width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+}
+table.right {
+  margin-left: auto;
+}
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+table.left {
+  margin-right: auto;
+}
+thead, tbody {
+  border: 1px solid var(--line-color);
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 5px 10px;
+}
+th {
+  background-color: var(--line-color);
+}
+:is(tr:nth-child(2n), thead+tbody > tr:nth-child(2n+1)) > td {
+  background-color: var(--background-color);
+}
+:is(tr:nth-child(2n+1), thead+tbody > tr:nth-child(2n)) > td {
+  background-color: var(--highlight-color);
+}
+table caption {
+  margin: 0;
+  padding: 3px 0 3px 1em;
+}
+table p {
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  margin-left: 3px;
+  opacity: 0.2;
+  user-select: none;
+}
+a.pilcrow[href] { color: var(--pilcrow-weak); }
+a.pilcrow[href]:hover { text-decoration: none; }
+@media not print {
+  :hover > a.pilcrow {
+    opacity: 1;
+  }
+  a.pilcrow[href]:hover {
+    color: var(--pilcrow-strong);
+    background-color: transparent;
+  }
+}
+@media print {
+  a.pilcrow {
+    display: none;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-color);
+}
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: 600;
+  font-size: var(--small-font-size);
+}
+.role {
+  font-variant: all-small-caps;
+}
+sub, sup {
+  line-height: 1;
+  font-size: 80%;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: var(--small-font-size);
+  line-height: 18px;
+  --identifier-width: 15ch;
+}
+#identifiers dt {
+  width: var(--identifier-width);
+  min-width: var(--identifier-width);
+  clear: left;
+  float: left;
+  text-align: right;
+  margin-right: 1ch;
+}
+#identifiers dd {
+  margin: 0;
+  margin-left: calc(1em + var(--identifier-width)) !important;
+  min-width: 5em;
+}
+#identifiers .authors .author {
+  display: inline-block;
+  margin-right: 1.5em;
+}
+#identifiers .authors .org {
+  font-style: italic;
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: left;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+}
+#toc nav ul {
+  margin: 0 0.5em 0 0;
+  padding: 0;
+  list-style: none;
+}
+#toc nav li {
+  line-height: 1.3em;
+  margin: 2px 0;
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+}
+#toc a.xref {
+  white-space: normal;
+}
+/* references */
+.references dt {
+  text-align: right;
+  font-weight: bold;
+  min-width: 10ch;
+  margin-right: 1.5ch;
+}
+.references dt:target::before {
+  content: "⇒";
+  width: 15px;
+  margin: 0 10px 0 -25px;
+}
+.references dd {
+  margin-left: 12ch !important;
+  overflow: auto;
+}
+
+.refInstance {
+  margin-bottom: 1.25em;
+}
+
+.references .ascii {
+  margin-bottom: 0.25em;
+}
+
+/* index */
+#rfc\.index\.index + ul {
+  margin-left: 0;
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  margin: 1em 0;
+}
+address.vcard .nameRole {
+  font-weight: 700;
+  margin-left: 0;
+}
+address.vcard .label {
+  margin: 0.5em 0;
+}
+address.vcard .type {
+  display: none;
+}
+.alternative-contact {
+  margin: 1.5em 0 1em;
+}
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+@media (min-width: 500px) {
+  #authors-addresses > section {
+    column-count: 2;
+    column-gap: 20px;
+  }
+  #authors-addresses > section > h2 {
+    column-span: all;
+  }
+  /* hack for break-inside: avoid-column */
+  #authors-addresses address {
+    display: inline-block;
+    break-inside: avoid-column;
+  }
+}
+
+.rfcEditorRemove p:first-of-type {
+  font-style: italic;
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+/* alternative layout for smaller screens */
+@media screen and (max-width: 929px) {
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 1px 0 0 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    opacity: 0.6;
+  }
+  #toc.active {
+      opacity: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 2px 0 2px 6px;
+    padding-right: 1em;
+    font-size: 18px;
+    line-height: 24px;
+    min-width: 190px;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+  }
+  #toc h2::before { /* css hamburger */
+    float: right;
+    position: relative;
+    width: 1em;
+    height: 1px;
+    left: -164px;
+    margin: 8px 0 0 0;
+    background: white none repeat scroll 0 0;
+    box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+    content: "";
+  }
+  #toc nav {
+    display: none;
+    background-color: var(--background-color);
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }
+  #toc.active nav {
+    display: block;
+  }
+  /* Make the collapsed ToC header render white on gray also when it's a link */
+  #toc h2 a,
+  #toc h2 a:link,
+  #toc h2 a:focus,
+  #toc h2 a:hover,
+  #toc a.toplink,
+  #toc a.toplink:hover {
+    color: white;
+    background-color: #444;
+    text-decoration: none;
+  }
+  #toc a.toplink {
+    margin-top: 2px;
+  }
+}
+
+/* alternative layout for wide screens */
+@media screen and (min-width: 930px) {
+  body {
+    padding-right: 360px;
+    padding-right: calc(min(180px + 20%, 500px));
+  }
+  #toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 480px);
+    width: 312px;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 2em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  #toc nav > ul  {
+    margin-bottom: 2em;
+  }
+  #toc ul {
+    margin: 0 0 0 4px;
+    font-size: var(--small-font-size);
+  }
+  #toc ul :is(p, li) {
+    margin: 2px 0;
+    line-height: 22px;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre, .vcard {
+    page-break-inside: avoid;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  :is(h2, h3, h4, h5, h6)+*, dd {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+  .toplink {
+    display: none;
+  }
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+}
+
+/* Changes introduced to fix issues found during implementation */
+
+/* Separate body from document info even without intervening H1 */
+section {
+  clear: both;
+}
+
+/* Top align author divs, to avoid names without organization dropping level with org names */
+.author {
+  vertical-align: top;
+}
+
+/* Style section numbers with more space between number and title */
+.section-number {
+  padding-right: 0.5em;
+}
+
+/* Add styling for a link in the ToC that points to the top of the document */
+a.toplink {
+  float: right;
+  margin: 8px 0.5em 0;
+}
+
+/* Provide styling for table cell text alignment */
+table .text-left {
+  text-align: left;
+}
+table .text-center {
+  text-align: center;
+}
+table .text-right {
+  text-align: right;
+}
+
+/* Make the alternative author contact information look less like just another
+   author, and group it closer with the primary author contact information */
+.alternative-contact {
+  margin: 0.5em 0 0.25em 0;
+}
+address .non-ascii {
+  margin: 0 0 0 2em;
+}
+
+/* With it being possible to set tables with alignment
+  left, center, and right, { width: 100%; } does not make sense */
+table {
+  width: auto;
+}
+
+/* Avoid reference text that sits in a block with very wide left margin,
+   because of a long floating dt label.*/
+.references dd {
+  overflow: visible;
+}
+
+/* Control caption placement */
+caption {
+  caption-side: bottom;
+}
+
+/* Limit the width of the author address vcard, so names in right-to-left
+   script don't end up on the other side of the page. */
+
+address.vcard {
+  max-width: 20em;
+  margin-right: auto;
+}
+
+/* For address alignment dependent on LTR or RTL scripts */
+address div.left {
+  text-align: left;
+}
+address div.right {
+  text-align: right;
+}
+
+/* Dark mode. */
+@media (prefers-color-scheme: dark) {
+:root {
+  --background-color: #121212;
+  --text-color: #f0f0f0;
+  --title-color: #fff;
+  --link-color: #4da4f0;
+  --highlight-color: #282828;
+  --line-color: #444;
+  --pilcrow-weak: #444;
+  --pilcrow-strong: #666;
+  scrollbar-color: #777 #333;
+}
+}
+
+/* SVG Trick: a prefix match works because only black and white are allowed */
+svg :is([stroke="black"], [stroke^="#000"]) {
+  stroke: var(--text-color);
+}
+svg :is([stroke="white"], [stroke^="#fff"]) {
+  stroke: var(--background-color);
+}
+svg :is([fill="black"], [fill^="#000"], :not([fill])) {
+  fill: var(--text-color);
+}
+svg :is([fill="white"], [fill^="#fff"]) {
+  fill: var(--background-color);
+}
+</style>
+
+</head>
+<body class="xml2rfc">
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">DMaNM</td>
+<td class="right">October 2023</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Dios, et al.</td>
+<td class="center">Expires 25 April 2024</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">Operations and Management Area Working Group</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-ogondio-opsawg-dmanm-latest</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2023-10-23" class="published">23 October 2023</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Informational</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2024-04-25">25 April 2024</time></dd>
+<dt class="label-authors">Authors:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">O. G. D. Dios</div>
+<div class="org">Telefonica</div>
+</div>
+<div class="author">
+      <div class="author-name">V. Lopez</div>
+<div class="org">Nokia</div>
+</div>
+<div class="author">
+      <div class="author-name">M. Boucadair</div>
+<div class="org">Orange</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">An Approach to Expose 'Device Models'-as-'Network Models'</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">This document describes an approach for exposing Device Models as Network Models (DMaNM). In particular, this document provides guidance for structuring a data model to facilitate the reuse of device models within the customer-facing interface of Software-Defined Networking (SDN) controllers. The objective of this approach is to enhance the reusability of device models in various network scenarios and ease the mapping between network/service models with device models.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+</section>
+<section class="note rfcEditorRemove" id="section-note.1">
+      <h2 id="name-about-this-document">
+<a href="#name-about-this-document" class="section-name selfRef">About This Document</a>
+      </h2>
+<p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
+<p id="section-note.1-2">
+        The latest revision of this draft can be found at <span><a href="https://vlopezalvarez.github.io/draft-ogondio-opsawg-dmanm/draft-ogondio-opsawg-dmanm.html">https://vlopezalvarez.github.io/draft-ogondio-opsawg-dmanm/draft-ogondio-opsawg-dmanm.html</a></span>.
+        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-ogondio-opsawg-dmanm/">https://datatracker.ietf.org/doc/draft-ogondio-opsawg-dmanm/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+<p id="section-note.1-3">
+        Discussion of this document takes place on the
+        Operations and Management Area Working Group Working Group mailing list (<span><a href="mailto:opsawg@ietf.org">mailto:opsawg@ietf.org</a></span>),
+        which is archived at <span><a href="https://mailarchive.ietf.org/arch/browse/opsawg/">https://mailarchive.ietf.org/arch/browse/opsawg/</a></span>.
+        Subscribe at <span><a href="https://www.ietf.org/mailman/listinfo/opsawg/">https://www.ietf.org/mailman/listinfo/opsawg/</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
+<p id="section-note.1-4">Source for this draft and an issue tracker can be found at
+        <span><a href="https://github.com/vlopezalvarez/draft-ogondio-opsawg-dmanm">https://github.com/vlopezalvarez/draft-ogondio-opsawg-dmanm</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 25 April 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2023 IETF Trust and the persons identified as the
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document. Code Components extracted from this
+            document must include Revised BSD License text as described in
+            Section 4.e of the Trust Legal Provisions and are provided without
+            warranty as described in the Revised BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-toc.1">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-terminology" class="internal xref">Terminology</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
+                <p id="section-toc.1-1.2.2.1.1" class="keepWithNext"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-terminology-and-notations" class="internal xref">Terminology and Notations</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
+                <p id="section-toc.1-1.2.2.2.1" class="keepWithNext"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-requirements-language" class="internal xref">Requirements Language</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3">
+                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="auto internal xref">2.3</a>.  <a href="#name-prefix-in-data-node-names" class="internal xref">Prefix in Data Node Names</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-sample-use-cases" class="internal xref">Sample Use Cases</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-device-config-as-a-service" class="internal xref">"Device Config"-as-a-Service</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-profiles" class="internal xref">Profiles</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-guidelines-to-use-device-mo" class="internal xref">Guidelines to Use Device Models in the Customer-facing Interface of SDN Controllers</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-groups-of-network-elements" class="internal xref">Groups of Network Elements</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-yang-structure-for-extendin" class="internal xref">YANG Structure for Extending the Models</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-dmanm-yang-model" class="internal xref">DMaNM YANG Model</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-groups-of-network-elements-2" class="internal xref">Groups of Network Elements</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-usage-example-applying-the-" class="internal xref">Usage Example: Applying the Guidelines to The 'foo' Module"</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-implementation-status" class="internal xref">Implementation Status</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+</li>
+        </ul>
+</nav>
+</section>
+</div>
+<div id="introduction">
+<section id="section-1">
+      <h2 id="name-introduction">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<p id="section-1-1">Network operators need to efficiently manage  network elements throughout their infrastructure. By implementing network-wide management and configuration practices, operators can achieve centralized control and visibility over their network elements. This enables them to streamline operations, monitor performance, and promptly respond to network events. Moreover, network-wide management facilitates the enforcement of standardized policies and configurations, thus ensuring consistent behavior and minimizing the risk of errors or misconfigurations that may result in service disruptions. Additionally, it enables operators to implement proactive actions such as performance optimization, load balancing, and security policies across the entire network, fostering a more secure and efficient infrastructure.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">The ability to reuse device models may play a crucial role in network management. Multiple teams within an organization, such as network engineering, operations, and planning, can benefit from accessing these device models. These models serve as a common language for understanding and configuring network elements, ensuring consistency and interoperability across different teams and systems. The utilization of models from various teams is a key requirement for network operators.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">The IETF has made remarkable progress in defining device models to manage network element capabilities. These device models, often represented using YANG data modeling language, provide a structured, standardized approach to manage various network devices and their features. By leveraging YANG models, network operators can effectively manage the network element functionalities. These models not only streamline network management but also promote interoperability between different vendors and platforms, fostering a more efficient and robust networking ecosystem.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">Some examples of these device models are:<a href="#section-1-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1-5.1">
+          <p id="section-1-5.1.1">"ietf-routing-policy" <span>[<a href="#RFC8349" class="cite xref">RFC8349</a>]</span>: This YANG model defines a generic data model for managing routing policies that can be applied to various routing protocols. The model provides a framework for creating, modifying, and applying routing policies, which allows defining how routes are selected, filtered, and modified. The "ietf-routing-policy" model covers features like policy definition, policy attachment, route filters, and route actions.<a href="#section-1-5.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-1-5.2">
+          <p id="section-1-5.2.1">"ietf-bgp-policy" <span>[<a href="#I-D.ietf-idr-bgp-model" class="cite xref">I-D.ietf-idr-bgp-model</a>]</span>: This YANG model defines a data model for the Border Gateway Protocol (BGP). The "ietf-bgp-policy" model is designed to configure and manage BGP routers and sessions, as well as provide a representation of BGP operational state data. The model covers BGP-specific features such as peer configuration, address families, route filters, and route actions. The model is intended to work alongside the "ietf-routing-policy" model to manage BGP routing policies.<a href="#section-1-5.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-1-5.3">
+          <p id="section-1-5.3.1">"ietf-access-list" <span>[<a href="#RFC8519" class="cite xref">RFC8519</a>]</span>: This YANG model provides a data model for configuring and managing network access control lists (ACLs). This model provides a generic structure for representing ACLs, along with the ability to define rules for permitting, denying, or assigning a specific action to matching packets.<a href="#section-1-5.3.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-1-6">Software-Defined Networking (SDN) <span>[<a href="#RFC7149" class="cite xref">RFC7149</a>]</span><span>[<a href="#RFC7426" class="cite xref">RFC7426</a>]</span> controllers facilitate seamless communication and coordination between high-level management systems and the underlying network infrastructure. This arrangement enables efficient translation of network-wide policies and objectives, defined by the Operations Support Systems (OSS), into granular, device-specific configurations and commands for the network elements. A similar concept applies for orchestration scenarios like in network slicing. Consequently, SDN controllers are typically placed as intermediate entities between the OSS and the network elements. <a href="#SDNsce" class="auto internal xref">Figure 1</a> represents this scenario, where the SDN controller exposes its customer-facing interface to the OSS or orchestration layer.<a href="#section-1-6" class="pilcrow">¶</a></p>
+<span id="name-an-example-of-sdn-scenario"></span><div id="SDNsce">
+<figure id="figure-1">
+        <div class="alignCenter art-text artwork" id="section-1-7.1">
+<pre>
+        +-----+  +------+
+        | OSS |  | Orch |
+        +-----+  +------+
+           ^        ^
+           |        | Customer-Facing
+           v        v    Interface
+     +-------------------+
+     | SDN Controller(s) |
+     +-------------------+
+      ^      ^       ^
+      |      |       | Network-Facing
+      v      v       v    Interface
+  +-----+ +-----+ +-----+
+  | NE1 | | NE2 | | NE3 |
+  +-----+ +-----+ +-----+
+</pre>
+</div>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-an-example-of-sdn-scenario" class="selfRef">An Example of SDN Scenario</a>
+        </figcaption></figure>
+</div>
+<p id="section-1-8"><a href="#SDNsce" class="auto internal xref">Figure 1</a> illustrates the hierarchical relationship between the OSS, SDN controller and the network elements. Typically, the OSS acts as the central management system responsible for overseeing the entire network. Similarly, an orchestrator acts with a similar role in scenarios like network slicing. The SDN controller, positioned in the middle, acts as an intermediary, facilitating communication and coordination between the OSS and the network elements. At the bottom, the network elements are directly controlled and configured by the SDN controller. This archicture enables efficient translation of high-level network policies into device-specific configurations, ultimately streamlining network management and decoupling the systems from the network evolution.<a href="#section-1-8" class="pilcrow">¶</a></p>
+<p id="section-1-9">Device models were defined to be applicable in the network-facing interface of an SDN controller. As a result, these models do not inherently possess the necessary network concepts to make them directly applicable in the customer-facing interface of the SDN controller.<a href="#section-1-9" class="pilcrow">¶</a></p>
+<p id="section-1-10">Within the scope of the IETF, efforts can be focused on two approaches when it comes to creating network models for device models. The first approach involves creating network models specific to each device model, while the second approach entails developing a generic and reusable structure for all models. This document puts forth a proposal for a reusable structure, aligning with the latter approach.<a href="#section-1-10" class="pilcrow">¶</a></p>
+<p id="section-1-11">The YANG data model defined in this document conforms to the Network Management Datastore Architecture (NMDA) defined in <span>[<a href="#RFC8342" class="cite xref">RFC8342</a>]</span>.<a href="#section-1-11" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="terminology">
+<section id="section-2">
+      <h2 id="name-terminology">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-terminology" class="section-name selfRef">Terminology</a>
+      </h2>
+<div id="terminology-and-notations">
+<section id="section-2.1">
+        <h3 id="name-terminology-and-notations">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-terminology-and-notations" class="section-name selfRef">Terminology and Notations</a>
+        </h3>
+<p id="section-2.1-1">The document uses the following terms from <span>[<a href="#RFC8309" class="cite xref">RFC8309</a>]</span> and <span>[<a href="#RFC8969" class="cite xref">RFC8969</a>]</span>:<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-2.1-2">
+          <dt id="section-2.1-2.1">Service Model:</dt>
+          <dd style="margin-left: 1.5em" id="section-2.1-2.2">
+            <p id="section-2.1-2.2.1">Describes a service and the parameters of the service in a portable way that can be used uniformly and independent of the equipment and operating environment.<a href="#section-2.1-2.2.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-2.1-2.3"></dt>
+          <dd style="margin-left: 1.5em" id="section-2.1-2.4">
+            <p id="section-2.1-2.4.1">Examples of service models are the L3VPN Service Model (L3SM) <span>[<a href="#RFC8299" class="cite xref">RFC8299</a>]</span> and the L2VPN Service Model (L2SM) <span>[<a href="#RFC8466" class="cite xref">RFC8466</a>]</span>.<a href="#section-2.1-2.4.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-2.1-2.5">Network Model:</dt>
+          <dd style="margin-left: 1.5em" id="section-2.1-2.6">
+            <p id="section-2.1-2.6.1">Describes a network-level abstraction (or a subset of aspects of a network infrastructure), including devices and their subsystems, and relevant protocols operating at the link and network layers across multiple devices. This model corresponds to the network configuration model discussed in <span>[<a href="#RFC8309" class="cite xref">RFC8309</a>]</span>. : It can be used by a network operator to allocate resources (e.g., tunnel resource, topology resource) for the service or schedule resources to meet the service requirements defined in a service model.<a href="#section-2.1-2.6.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-2.1-2.7"></dt>
+          <dd style="margin-left: 1.5em" id="section-2.1-2.8">
+            <p id="section-2.1-2.8.1">Examples of network models are the L3VPN Network Model (L3NM) <span>[<a href="#RFC9182" class="cite xref">RFC9182</a>]</span> or the L2VPN Network Model (L2NM) <span>[<a href="#RFC9291" class="cite xref">RFC9291</a>]</span>.<a href="#section-2.1-2.8.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-2.1-2.9">Device Model:</dt>
+          <dd style="margin-left: 1.5em" id="section-2.1-2.10">
+            <p id="section-2.1-2.10.1">Refers to the Network Element YANG data model described in <span>[<a href="#RFC8199" class="cite xref">RFC8199</a>]</span> or the device configuration model discussed in <span>[<a href="#RFC8309" class="cite xref">RFC8309</a>]</span>.<a href="#section-2.1-2.10.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-2.1-2.11"></dt>
+          <dd style="margin-left: 1.5em" id="section-2.1-2.12">
+            <p id="section-2.1-2.12.1">Device models are also used to refer to model a function embedded in a device (e.g., Access Control Lists (ACLs) <span>[<a href="#RFC8519" class="cite xref">RFC8519</a>]</span>).<a href="#section-2.1-2.12.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+</dl>
+</section>
+</div>
+<div id="requirements-language">
+<section id="section-2.2">
+        <h3 id="name-requirements-language">
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-requirements-language" class="section-name selfRef">Requirements Language</a>
+        </h3>
+<p id="section-2.2-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
+"<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
+described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
+appear in all capitals, as shown here.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="prefix-in-data-node-names">
+<section id="section-2.3">
+        <h3 id="name-prefix-in-data-node-names">
+<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-prefix-in-data-node-names" class="section-name selfRef">Prefix in Data Node Names</a>
+        </h3>
+<p id="section-2.3-1">In this document, names of data nodes and other data model objects will be prefixed using the standard prefix associated with the corresponding YANG imported modules, as shown in the following table.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
+<span id="name-prefixes-and-corresponding-"></span><div id="tab-prefixes">
+<table class="center" id="table-1">
+          <caption>
+<a href="#table-1" class="selfRef">Table 1</a>:
+<a href="#name-prefixes-and-corresponding-" class="selfRef">Prefixes and corresponding YANG modules</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Prefix</th>
+              <th class="text-left" rowspan="1" colspan="1">Yang Module</th>
+              <th class="text-left" rowspan="1" colspan="1">Reference</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ntwdev</td>
+              <td class="text-left" rowspan="1" colspan="1">ietf-network-device</td>
+              <td class="text-left" rowspan="1" colspan="1">RFCXXX</td>
+            </tr>
+          </tbody>
+        </table>
+</div>
+<p id="section-2.3-3">RFC Editor Note:
+Please replace XXXX with the RFC number assigned to this document. Please remove this note in that case.<a href="#section-2.3-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="sample-use-cases">
+<section id="section-3">
+      <h2 id="name-sample-use-cases">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-sample-use-cases" class="section-name selfRef">Sample Use Cases</a>
+      </h2>
+<div id="device-config-as-a-service">
+<section id="section-3.1">
+        <h3 id="name-device-config-as-a-service">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-device-config-as-a-service" class="section-name selfRef">"Device Config"-as-a-Service</a>
+        </h3>
+<p id="section-3.1-1">"Device Config"-as-a-Service involves the use of device models by an OSS to configure network elements through an SDN controller. In this scenario, the SDN controller acts as an intermediary between the OSS and the network elements, providing a configuration service for each network element.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-2">By leveraging device models, the OSS gains a common representation of the network elements' capabilities and configuration parameters. These device models define the desired configuration for specific functions, such as ACLs or routing policies. The OSS utilizes these device models to define the desired configuration for each network element.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.1-3">Through an SDN controller, the OSS can send the configuration instructions based on the device models to the respective network elements. The SDN controller translates and applies the configuration, ensuring consistency and correctness across the network. Moreover, the mediation of the SDN controller facilitates the access to the network elements from several users, applications or OSS minimizing the impact on the device.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="profiles">
+<section id="section-3.2">
+        <h3 id="name-profiles">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-profiles" class="section-name selfRef">Profiles</a>
+        </h3>
+<p id="section-3.2-1">By leveraging device models, network operators can design profile that represent configurations for specific network functionalities, protocols, or services. These templates serve as reusable building blocks, encapsulating best practices, and ensuring consistency in network configuration and management. Once a profile is created, it can be applied to one or multiple network elements, either individually or in groups, depending on the specific network requirements.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-2">This approach not only simplifies the configuration process but also reduces the likelihood of errors and misconfigurations, ultimately improving network stability and performance. Moreover, this process facilitates the lifecycle of the configurations enabling updating the profiles and, later, the network elements in a consistent manner across multiple network elements as a network-wide operation.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="guidelines-to-use-device-models-in-the-customer-facing-interface-of-sdn-controllers">
+<section id="section-4">
+      <h2 id="name-guidelines-to-use-device-mo">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-guidelines-to-use-device-mo" class="section-name selfRef">Guidelines to Use Device Models in the Customer-facing Interface of SDN Controllers</a>
+      </h2>
+<p id="section-4-1">This section outlines two key concepts for the guidelines on utilizing device models in the Customer-facing Interface of SDN controllers: (1) groups of network elements and (2) a YANG structure for extending device models to enable network-wide utilization.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<div id="groups-of-network-elements">
+<section id="section-4.1">
+        <h3 id="name-groups-of-network-elements">
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-groups-of-network-elements" class="section-name selfRef">Groups of Network Elements</a>
+        </h3>
+<p id="section-4.1-1">The management of groups of network elements is a requirement to cover the previous use cases. It is intended to have a YANG model to tag a group of network elements under the same identifier, so the operator can apply a given configuration to a set of devices. This document defines a module called "grp-ntw-elements", which provides a structured approach to represent and manage groups of network elements, enabling efficient network management.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.1-2">The "grp-ntw-elements" module defines a YANG model for representing a group of network elements. Within the module, there is a list called "grp-ntw-element" that includes the groups of network elements. Each group is uniquely identified by the "grp-ne-id" leaf, which has a string data type and represents the group's identifier. The "grp-ntw-element" list has a nested list called "ntw-elements" to specify the individual network elements within each group. The "ntw-element" list has a key of "ne-id" to uniquely identify each network element. The "ne-id" leaf represents the identifier of each network element and has a string data type.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
+<p id="section-4.1-3"><a href="#grp-ntw-elements-tree-st" class="auto internal xref">Figure 2</a> represents the tree of the proposed YANG model. Tree diagrams used in this document follow the notation defined in <span>[<a href="#RFC8340" class="cite xref">RFC8340</a>]</span>.<a href="#section-4.1-3" class="pilcrow">¶</a></p>
+<span id="name-group-of-network-elements"></span><div id="grp-ntw-elements-tree-st">
+<figure id="figure-2">
+          <div class="alignCenter art-text artwork" id="section-4.1-4.1">
+<pre>
+module: grp-ntw-elements
+  +--rw grp-ntw-element* [grp-ne-id]
+     +--rw grp-ne-id       string
+     +--rw ntw-element* [ne-id]
+        +--rw ne-id    string
+</pre>
+</div>
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<a href="#name-group-of-network-elements" class="selfRef">Group of Network Elements</a>
+          </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="yang-structure-for-extending-the-models">
+<section id="section-4.2">
+        <h3 id="name-yang-structure-for-extendin">
+<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-yang-structure-for-extendin" class="section-name selfRef">YANG Structure for Extending the Models</a>
+        </h3>
+<p id="section-4.2-1">The document proposes a structure to enable the reutilization of the device models in network scenarios. The objective is to create a YANG model with the device model and providing a nested structure to store deployment information for network elements associated with each instance in the list. The guideline is to follow the next structure:<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-4.2-2.1">
+            <p id="section-4.2-2.1.1">An import of the device model.<a href="#section-4.2-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-4.2-2.2">
+            <p id="section-4.2-2.2.1">A container named deployment that includes:<a href="#section-4.2-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-4.2-2.3">
+            <p id="section-4.2-2.3.1">A list called "ntw-element" with the following elements:<a href="#section-4.2-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-4.2-2.4">
+            <p id="section-4.2-2.4.1">A leaf named "ne-id" of type string that serves as the network element identifier (which is the key).<a href="#section-4.2-2.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-4.2-2.5">
+            <p id="section-4.2-2.5.1">A leaf named "devmod-alias" of type string that serves as the device module alias for the deployment.<a href="#section-4.2-2.5.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-4.2-2.6">
+            <p id="section-4.2-2.6.1">A list called "grp-ntw-element" with the following elements:<a href="#section-4.2-2.6.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-4.2-2.6.2.1">
+                <p id="section-4.2-2.6.2.1.1">A leaf named "grp-ne-id" of type string that serves as the network element identifier (which is the key).<a href="#section-4.2-2.6.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-4.2-2.6.2.2">
+                <p id="section-4.2-2.6.2.2.1">A leaf named "devmod-alias" of type string that serves as the device module alias for the deployment.<a href="#section-4.2-2.6.2.2.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+</li>
+        </ul>
+<p id="section-4.2-3">Let us assume that there is a device model called "foo.yang". The tree of the "foo.yang" model is shown in <a href="#foo-tree-st" class="auto internal xref">Figure 3</a>.<a href="#section-4.2-3" class="pilcrow">¶</a></p>
+<span id="name-foo-tree-structure"></span><div id="foo-tree-st">
+<figure id="figure-3">
+          <div class="alignCenter art-text artwork" id="section-4.2-4.1">
+<pre>
+module: foo
+  +--rw foo?   empty
+</pre>
+</div>
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<a href="#name-foo-tree-structure" class="selfRef">Foo Tree Structure</a>
+          </figcaption></figure>
+</div>
+<p id="section-4.2-5">This document proposes the creation of a module that consists of a list of instances from the "foo.yang" model. To iterate through the list, a key named "devmod-name" must be defined, which will be a string. Additionally, the new model will import "foo.yang". Lastly, a container called "deployment" will encompass a list of network elements, with each element identified by the "ne-id" and having a "devmod-alias" as an alias for the "devmod-name" configuration in the network element.<a href="#section-4.2-5" class="pilcrow">¶</a></p>
+<p id="section-4.2-6">An example of the proposed structure is shown in <a href="#foo-ntwdev-tree-st" class="auto internal xref">Figure 4</a>.<a href="#section-4.2-6" class="pilcrow">¶</a></p>
+<span id="name-usage-example-for-foo-modul"></span><div id="foo-ntwdev-tree-st">
+<figure id="figure-4">
+          <div class="alignCenter art-text artwork" id="section-4.2-7.1">
+<pre>
+module: foo-ntwdev
+  +--rw devmod-list* [devmod-name]
+     +--rw devmod-name    string
+     +--rw foo?           -&gt; /foo:foo
+     +--rw deployment
+        +--rw ntw-elements* [ne-id]
+        |  +--rw ne-id           string
+        |  +--rw devmod-alias?   string
+        +--rw grp-ntw-elements* [grp-ne-id]
+           +--rw grp-ne-id       string
+           +--rw devmod-alias?   string
+</pre>
+</div>
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
+<a href="#name-usage-example-for-foo-modul" class="selfRef">Usage Example for 'foo' Module</a>
+          </figcaption></figure>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="dmanm-yang-model">
+<section id="section-5">
+      <h2 id="name-dmanm-yang-model">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-dmanm-yang-model" class="section-name selfRef">DMaNM YANG Model</a>
+      </h2>
+<div id="groups-of-network-elements-1">
+<section id="section-5.1">
+        <h3 id="name-groups-of-network-elements-2">
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-groups-of-network-elements-2" class="section-name selfRef">Groups of Network Elements</a>
+        </h3>
+<div class="sourcecode" id="section-5.1-1">
+<pre>&lt;CODE BEGINS&gt; file "grp-ntw-elements@2023-10-23.yang"
+
+
+module grp-ntw-elements {
+  yang-version 1.1;
+  namespace "urn:ietf:params:xml:ns:yang:grp-ntw-elements";
+  prefix "grp";
+
+  organization
+    "IETF OPSA (Operations and Management Area) Working Group";
+  contact
+    "WG Web:  &lt;https://datatracker.ietf.org/wg/opsawg/&gt;
+    WG List:  &lt;mailto:opsawg@ietf.org&gt;
+
+    Editor:   Oscar Gonzalez de Dios
+              &lt;mailto:oscar.gonzalezdedios@telefonica.com&gt;
+    Editor:   Victor Lopez
+              &lt;mailto:victor.lopez@nokia.com&gt;
+    Editor:   Mohamed Boucadair
+              &lt;mailto:mohamed.boucadair@orange.com&gt;";
+
+  description "YANG model for group of network elements.";
+
+  revision "2023-10-23" {
+    description "Initial revision.";
+    reference "RFC XXXX: An Approach to Expose 'Device Models'
+                         -as-'Network Models'";
+  }
+
+  list grp-ntw-element {
+    key "grp-ne-id";
+    description "List of groups of network elements.";
+
+    leaf grp-ne-id {
+      type string;
+      description "Group of network element identifier.";
+    }
+
+    list ntw-element {
+      key "ne-id";
+      description "List of network elements.";
+
+      leaf ne-id {
+        type string;
+        description "Network element identifier.";
+      }
+    }
+  }
+}
+
+&lt;CODE ENDS&gt;</pre><a href="#section-5.1-1" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="usage-example-applying-the-guidelines-to-the-foo-module">
+<section id="section-5.2">
+        <h3 id="name-usage-example-applying-the-">
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-usage-example-applying-the-" class="section-name selfRef">Usage Example: Applying the Guidelines to The 'foo' Module"</a>
+        </h3>
+<div class="alignLeft art-text artwork" id="section-5.2-1">
+<pre>
+module foo-ntwdev {
+  namespace "urn:example:foo-ntwdev";
+  prefix "netdevfoo";
+
+  import foo {
+    prefix "foo";
+  }
+
+  organization "Example Organization";
+  contact "example@example.com";
+  description "YANG model for foo-dev.";
+  revision "2023-10-23" {
+    description "Initial revision.";
+    reference "RFC XXXX: YANG Model for foo-dev";
+  }
+
+  leaf foo {
+    type leafref {
+      path "/foo:foo";
+    }
+    description "Reference to foo leaf from foo.yang";
+  }
+
+  container deployment {
+    description "Deployment container.";
+
+    list ntw-element {
+      key "ne-id";
+      description "List of network elements.";
+
+      leaf ne-id {
+        type string;
+        description "Network element identifier.";
+      }
+      leaf devmod-alias {
+        type string;
+        description "Device module alias for the deployment.";
+      }
+    }
+
+    list grp-ntw-element {
+      key "grp-ne-id";
+      description "List of group of network elements.";
+
+      leaf grp-ne-id {
+        type string;
+        description "Group of network element identifier.";
+      }
+      leaf devmod-alias {
+        type string;
+        description "Device module alias for the deployment.";
+      }
+    }
+  }
+}
+</pre><a href="#section-5.2-1" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="security-considerations">
+<section id="section-6">
+      <h2 id="name-security-considerations">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      </h2>
+<p id="section-6-1">The YANG module specified in this document defines schema for data that is designed to be accessed via network management protocols such as NETCONF <span>[<a href="#RFC6241" class="cite xref">RFC6241</a>]</span> or RESTCONF <span>[<a href="#RFC8040" class="cite xref">RFC8040</a>]</span>. The lowest NETCONF layer is the secure transport layer, and the mandatory-to-implement secure transport is Secure Shell (SSH) <span>[<a href="#RFC6242" class="cite xref">RFC6242</a>]</span>. The lowest RESTCONF layer is HTTPS, and the mandatory-to-implement secure transport is TLS <span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]</span>.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-2">The Network Configuration Access Control Model (NACM) <span>[<a href="#RFC8341" class="cite xref">RFC8341</a>]</span> provides the means to restrict access for particular NETCONF or RESTCONF users to a preconfigured subset of all available NETCONF or RESTCONF protocol operations and content.<a href="#section-6-2" class="pilcrow">¶</a></p>
+<p id="section-6-3">There are a number of data nodes defined in this YANG module that are writable/creatable/deletable (i.e., config true, which is the default). These data nodes may be considered sensitive or vulnerable in some network environments. Write operations (e.g., edit-config) and delete operations to these data nodes without proper protection or authentication can have a negative effect on network operations. These are the subtrees and data nodes and their sensitivity/ vulnerability in the "xxx" module:<a href="#section-6-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6-4.1">
+          <p id="section-6-4.1.1">TBC<a href="#section-6-4.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-6-4.2">
+          <p id="section-6-4.2.1">TBC<a href="#section-6-4.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-6-5">Some of the readable data nodes in this YANG module may be considered sensitive or vulnerable in some network environments. It is thus important to control read access (e.g., via get, get-config, or notification) to these data nodes. These are the subtrees and data nodes and their sensitivity/vulnerability in the "ixxx" module:<a href="#section-6-5" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6-6.1">
+          <p id="section-6-6.1.1">TBC<a href="#section-6-6.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-6-6.2">
+          <p id="section-6-6.2.1">TBC<a href="#section-6-6.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+</section>
+</div>
+<div id="iana-considerations">
+<section id="section-7">
+      <h2 id="name-iana-considerations">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+      </h2>
+<p id="section-7-1">IANA is requested to register the following URI in the "ns" subregistry within the "IETF XML Registry"  <span>[<a href="#RFC3688" class="cite xref">RFC3688</a>]</span>:<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-2">URI:  urn:ietf:params:xml:ns:yang:xxxx
+   Registrant Contact:  The IESG.
+   XML:  N/A; the requested URI is an XML namespace.<a href="#section-7-2" class="pilcrow">¶</a></p>
+<p id="section-7-3">IANA is requested to register the following YANG module in the "YANG Module Names" registry  <span>[<a href="#RFC6020" class="cite xref">RFC6020</a>]</span> within the "YANG Parameters" registry group.<a href="#section-7-3" class="pilcrow">¶</a></p>
+<p id="section-7-4">Name:  xxx
+   Maintained by IANA?  N
+   Namespace:  urn:ietf:params:xml:ns:yang:xxx
+   Prefix:  xxx
+   Reference:  RFC xxxx<a href="#section-7-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="implementation-status">
+<section id="section-8">
+      <h2 id="name-implementation-status">
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-implementation-status" class="section-name selfRef">Implementation Status</a>
+      </h2>
+<p id="section-8-1">This section will be used to track the status of the implementations of the model. It is aimed at being removed if the document becomes RFC.<a href="#section-8-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="sec-normative-references">
+<section id="section-9">
+      <h2 id="name-normative-references">
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+      </h2>
+<dl class="references">
+<dt id="I-D.ietf-idr-bgp-model">[I-D.ietf-idr-bgp-model]</dt>
+      <dd>
+<span class="refAuthor">Jethanandani, M.</span>, <span class="refAuthor">Patel, K.</span>, <span class="refAuthor">Hares, S.</span>, and <span class="refAuthor">J. Haas</span>, <span class="refTitle">"YANG Model for Border Gateway Protocol (BGP-4)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-idr-bgp-model-17</span>, <time datetime="2023-07-05" class="refDate">5 July 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-idr-bgp-model-17">https://datatracker.ietf.org/doc/html/draft-ietf-idr-bgp-model-17</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC2119">[RFC2119]</dt>
+      <dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC3688">[RFC3688]</dt>
+      <dd>
+<span class="refAuthor">Mealling, M.</span>, <span class="refTitle">"The IETF XML Registry"</span>, <span class="seriesInfo">BCP 81</span>, <span class="seriesInfo">RFC 3688</span>, <span class="seriesInfo">DOI 10.17487/RFC3688</span>, <time datetime="2004-01" class="refDate">January 2004</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3688">https://www.rfc-editor.org/rfc/rfc3688</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6020">[RFC6020]</dt>
+      <dd>
+<span class="refAuthor">Bjorklund, M., Ed.</span>, <span class="refTitle">"YANG - A Data Modeling Language for the Network Configuration Protocol (NETCONF)"</span>, <span class="seriesInfo">RFC 6020</span>, <span class="seriesInfo">DOI 10.17487/RFC6020</span>, <time datetime="2010-10" class="refDate">October 2010</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6020">https://www.rfc-editor.org/rfc/rfc6020</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6241">[RFC6241]</dt>
+      <dd>
+<span class="refAuthor">Enns, R., Ed.</span>, <span class="refAuthor">Bjorklund, M., Ed.</span>, <span class="refAuthor">Schoenwaelder, J., Ed.</span>, and <span class="refAuthor">A. Bierman, Ed.</span>, <span class="refTitle">"Network Configuration Protocol (NETCONF)"</span>, <span class="seriesInfo">RFC 6241</span>, <span class="seriesInfo">DOI 10.17487/RFC6241</span>, <time datetime="2011-06" class="refDate">June 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6241">https://www.rfc-editor.org/rfc/rfc6241</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6242">[RFC6242]</dt>
+      <dd>
+<span class="refAuthor">Wasserman, M.</span>, <span class="refTitle">"Using the NETCONF Protocol over Secure Shell (SSH)"</span>, <span class="seriesInfo">RFC 6242</span>, <span class="seriesInfo">DOI 10.17487/RFC6242</span>, <time datetime="2011-06" class="refDate">June 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6242">https://www.rfc-editor.org/rfc/rfc6242</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7149">[RFC7149]</dt>
+      <dd>
+<span class="refAuthor">Boucadair, M.</span> and <span class="refAuthor">C. Jacquenet</span>, <span class="refTitle">"Software-Defined Networking: A Perspective from within a Service Provider Environment"</span>, <span class="seriesInfo">RFC 7149</span>, <span class="seriesInfo">DOI 10.17487/RFC7149</span>, <time datetime="2014-03" class="refDate">March 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7149">https://www.rfc-editor.org/rfc/rfc7149</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7426">[RFC7426]</dt>
+      <dd>
+<span class="refAuthor">Haleplidis, E., Ed.</span>, <span class="refAuthor">Pentikousis, K., Ed.</span>, <span class="refAuthor">Denazis, S.</span>, <span class="refAuthor">Hadi Salim, J.</span>, <span class="refAuthor">Meyer, D.</span>, and <span class="refAuthor">O. Koufopavlou</span>, <span class="refTitle">"Software-Defined Networking (SDN): Layers and Architecture Terminology"</span>, <span class="seriesInfo">RFC 7426</span>, <span class="seriesInfo">DOI 10.17487/RFC7426</span>, <time datetime="2015-01" class="refDate">January 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7426">https://www.rfc-editor.org/rfc/rfc7426</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8040">[RFC8040]</dt>
+      <dd>
+<span class="refAuthor">Bierman, A.</span>, <span class="refAuthor">Bjorklund, M.</span>, and <span class="refAuthor">K. Watsen</span>, <span class="refTitle">"RESTCONF Protocol"</span>, <span class="seriesInfo">RFC 8040</span>, <span class="seriesInfo">DOI 10.17487/RFC8040</span>, <time datetime="2017-01" class="refDate">January 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8040">https://www.rfc-editor.org/rfc/rfc8040</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8174">[RFC8174]</dt>
+      <dd>
+<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8199">[RFC8199]</dt>
+      <dd>
+<span class="refAuthor">Bogdanovic, D.</span>, <span class="refAuthor">Claise, B.</span>, and <span class="refAuthor">C. Moberg</span>, <span class="refTitle">"YANG Module Classification"</span>, <span class="seriesInfo">RFC 8199</span>, <span class="seriesInfo">DOI 10.17487/RFC8199</span>, <time datetime="2017-07" class="refDate">July 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8199">https://www.rfc-editor.org/rfc/rfc8199</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8299">[RFC8299]</dt>
+      <dd>
+<span class="refAuthor">Wu, Q., Ed.</span>, <span class="refAuthor">Litkowski, S.</span>, <span class="refAuthor">Tomotaki, L.</span>, and <span class="refAuthor">K. Ogaki</span>, <span class="refTitle">"YANG Data Model for L3VPN Service Delivery"</span>, <span class="seriesInfo">RFC 8299</span>, <span class="seriesInfo">DOI 10.17487/RFC8299</span>, <time datetime="2018-01" class="refDate">January 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8299">https://www.rfc-editor.org/rfc/rfc8299</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8309">[RFC8309]</dt>
+      <dd>
+<span class="refAuthor">Wu, Q.</span>, <span class="refAuthor">Liu, W.</span>, and <span class="refAuthor">A. Farrel</span>, <span class="refTitle">"Service Models Explained"</span>, <span class="seriesInfo">RFC 8309</span>, <span class="seriesInfo">DOI 10.17487/RFC8309</span>, <time datetime="2018-01" class="refDate">January 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8309">https://www.rfc-editor.org/rfc/rfc8309</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8340">[RFC8340]</dt>
+      <dd>
+<span class="refAuthor">Bjorklund, M.</span> and <span class="refAuthor">L. Berger, Ed.</span>, <span class="refTitle">"YANG Tree Diagrams"</span>, <span class="seriesInfo">BCP 215</span>, <span class="seriesInfo">RFC 8340</span>, <span class="seriesInfo">DOI 10.17487/RFC8340</span>, <time datetime="2018-03" class="refDate">March 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8340">https://www.rfc-editor.org/rfc/rfc8340</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8341">[RFC8341]</dt>
+      <dd>
+<span class="refAuthor">Bierman, A.</span> and <span class="refAuthor">M. Bjorklund</span>, <span class="refTitle">"Network Configuration Access Control Model"</span>, <span class="seriesInfo">STD 91</span>, <span class="seriesInfo">RFC 8341</span>, <span class="seriesInfo">DOI 10.17487/RFC8341</span>, <time datetime="2018-03" class="refDate">March 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8341">https://www.rfc-editor.org/rfc/rfc8341</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8342">[RFC8342]</dt>
+      <dd>
+<span class="refAuthor">Bjorklund, M.</span>, <span class="refAuthor">Schoenwaelder, J.</span>, <span class="refAuthor">Shafer, P.</span>, <span class="refAuthor">Watsen, K.</span>, and <span class="refAuthor">R. Wilton</span>, <span class="refTitle">"Network Management Datastore Architecture (NMDA)"</span>, <span class="seriesInfo">RFC 8342</span>, <span class="seriesInfo">DOI 10.17487/RFC8342</span>, <time datetime="2018-03" class="refDate">March 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8342">https://www.rfc-editor.org/rfc/rfc8342</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8349">[RFC8349]</dt>
+      <dd>
+<span class="refAuthor">Lhotka, L.</span>, <span class="refAuthor">Lindem, A.</span>, and <span class="refAuthor">Y. Qu</span>, <span class="refTitle">"A YANG Data Model for Routing Management (NMDA Version)"</span>, <span class="seriesInfo">RFC 8349</span>, <span class="seriesInfo">DOI 10.17487/RFC8349</span>, <time datetime="2018-03" class="refDate">March 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8349">https://www.rfc-editor.org/rfc/rfc8349</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8446">[RFC8446]</dt>
+      <dd>
+<span class="refAuthor">Rescorla, E.</span>, <span class="refTitle">"The Transport Layer Security (TLS) Protocol Version 1.3"</span>, <span class="seriesInfo">RFC 8446</span>, <span class="seriesInfo">DOI 10.17487/RFC8446</span>, <time datetime="2018-08" class="refDate">August 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8446">https://www.rfc-editor.org/rfc/rfc8446</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8466">[RFC8466]</dt>
+      <dd>
+<span class="refAuthor">Wen, B.</span>, <span class="refAuthor">Fioccola, G., Ed.</span>, <span class="refAuthor">Xie, C.</span>, and <span class="refAuthor">L. Jalil</span>, <span class="refTitle">"A YANG Data Model for Layer 2 Virtual Private Network (L2VPN) Service Delivery"</span>, <span class="seriesInfo">RFC 8466</span>, <span class="seriesInfo">DOI 10.17487/RFC8466</span>, <time datetime="2018-10" class="refDate">October 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8466">https://www.rfc-editor.org/rfc/rfc8466</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8519">[RFC8519]</dt>
+      <dd>
+<span class="refAuthor">Jethanandani, M.</span>, <span class="refAuthor">Agarwal, S.</span>, <span class="refAuthor">Huang, L.</span>, and <span class="refAuthor">D. Blair</span>, <span class="refTitle">"YANG Data Model for Network Access Control Lists (ACLs)"</span>, <span class="seriesInfo">RFC 8519</span>, <span class="seriesInfo">DOI 10.17487/RFC8519</span>, <time datetime="2019-03" class="refDate">March 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8519">https://www.rfc-editor.org/rfc/rfc8519</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8969">[RFC8969]</dt>
+      <dd>
+<span class="refAuthor">Wu, Q., Ed.</span>, <span class="refAuthor">Boucadair, M., Ed.</span>, <span class="refAuthor">Lopez, D.</span>, <span class="refAuthor">Xie, C.</span>, and <span class="refAuthor">L. Geng</span>, <span class="refTitle">"A Framework for Automating Service and Network Management with YANG"</span>, <span class="seriesInfo">RFC 8969</span>, <span class="seriesInfo">DOI 10.17487/RFC8969</span>, <time datetime="2021-01" class="refDate">January 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8969">https://www.rfc-editor.org/rfc/rfc8969</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9182">[RFC9182]</dt>
+      <dd>
+<span class="refAuthor">Barguil, S.</span>, <span class="refAuthor">Gonzalez de Dios, O., Ed.</span>, <span class="refAuthor">Boucadair, M., Ed.</span>, <span class="refAuthor">Munoz, L.</span>, and <span class="refAuthor">A. Aguado</span>, <span class="refTitle">"A YANG Network Data Model for Layer 3 VPNs"</span>, <span class="seriesInfo">RFC 9182</span>, <span class="seriesInfo">DOI 10.17487/RFC9182</span>, <time datetime="2022-02" class="refDate">February 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9182">https://www.rfc-editor.org/rfc/rfc9182</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9291">[RFC9291]</dt>
+    <dd>
+<span class="refAuthor">Boucadair, M., Ed.</span>, <span class="refAuthor">Gonzalez de Dios, O., Ed.</span>, <span class="refAuthor">Barguil, S.</span>, and <span class="refAuthor">L. Munoz</span>, <span class="refTitle">"A YANG Network Data Model for Layer 2 VPNs"</span>, <span class="seriesInfo">RFC 9291</span>, <span class="seriesInfo">DOI 10.17487/RFC9291</span>, <time datetime="2022-09" class="refDate">September 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9291">https://www.rfc-editor.org/rfc/rfc9291</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+<div id="acknowledgments">
+<section id="appendix-A">
+      <h2 id="name-acknowledgments">
+<a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
+      </h2>
+<p id="appendix-A-1">TODO acknowledge.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="authors-addresses">
+<section id="appendix-B">
+      <h2 id="name-authors-addresses">
+<a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Oscar Gonzalez de Dios</span></div>
+<div dir="auto" class="left"><span class="org">Telefonica</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:oscar.gonzalezdedios@telefonica.com" class="email">oscar.gonzalezdedios@telefonica.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Victor Lopez</span></div>
+<div dir="auto" class="left"><span class="org">Nokia</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:victor.lopez@nokia.com" class="email">victor.lopez@nokia.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Mohamed Boucadair</span></div>
+<div dir="auto" class="left"><span class="org">Orange</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:mohamed.boucadair@orange.com" class="email">mohamed.boucadair@orange.com</a>
+</div>
+</address>
+</section>
+</div>
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
+});
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
+</script>
+</body>
+</html>
