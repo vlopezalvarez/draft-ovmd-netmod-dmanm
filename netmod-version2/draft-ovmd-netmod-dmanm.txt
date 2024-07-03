@@ -2,20 +2,24 @@
 
 
 
-Operations and Management Area Working Group               O. G. D. Dios
+Network Modeling Working Group                             O. G. D. Dios
 Internet-Draft                                                Telefonica
 Intended status: Informational                                  V. Lopez
-Expires: 25 April 2024                                             Nokia
-                                                         23 October 2023
+Expires: 4 January 2025                                            Nokia
+                                                            M. Boucadair
+                                                                  Orange
+                                                           D. Ceccarelli
+                                                                   Cisco
+                                                             3 July 2024
 
 
        An Approach to Expose 'Device Models'-as-'Network Models'
-               draft-ogondio-opsawg-device-models-latest
+                     draft-ovmd-netmod-dmanm-latest
 
 Abstract
 
-   This document deescribes an appraoch for exposing Device Models as
-   Network Models (DMaaNM).  In particular, this documeent provides
+   This document describes an approach for exposing Device Models as
+   Network Models (DMaNM).  In particular, this document provides
    guidance for structuring a data model to facilitate the reuse of
    device models within the customer-facing interface of Software-
    Defined Networking (SDN) controllers.  The objective of this approach
@@ -28,19 +32,18 @@ About This Document
    This note is to be removed before publishing as an RFC.
 
    The latest revision of this draft can be found at
-   https://vlopezalvarez.github.io/draft-ogondio-opsawg-device-models/
-   draft-ogondio-opsawg-device-models.html.  Status information for this
-   document may be found at https://datatracker.ietf.org/doc/draft-
-   ogondio-opsawg-device-models/.
+   https://vlopezalvarez.github.io/draft-ogondio-opsawg-dmanm/draft-
+   ogondio-opsawg-dmanm.html.  Status information for this document may
+   be found at https://datatracker.ietf.org/doc/draft-ovmd-netmod-
+   dmanm/.
 
-   Discussion of this document takes place on the Operations and
-   Management Area Working Group Working Group mailing list
-   (mailto:opsawg@ietf.org), which is archived at
-   https://mailarchive.ietf.org/arch/browse/opsawg/.  Subscribe at
-   https://www.ietf.org/mailman/listinfo/opsawg/.
+   Discussion of this document takes place on the Network Modeling
+   Working Group Working Group mailing list (mailto:netmod@ietf.org),
+   which is archived at https://mailarchive.ietf.org/arch/browse/
+   netmod/.  Subscribe at https://www.ietf.org/mailman/listinfo/netmod/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/vlopezalvarez/draft-ogondio-opsawg-device-models.
+   https://github.com/vlopezalvarez/draft-ogondio-opsawg-dmanm.
 
 Status of This Memo
 
@@ -57,11 +60,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 April 2024.
+   This Internet-Draft will expire on 4 January 2025.
 
 Copyright Notice
 
-   Copyright (c) 2023 IETF Trust and the persons identified as the
+   Copyright (c) 2024 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -87,15 +90,13 @@ Table of Contents
            Interface of SDN Controllers
      4.1.  Groups of Network Elements
      4.2.  YANG Structure for Extending the Models
-   5.  DMaaNM YANG Model
+   5.  DMaNM YANG Model
      5.1.  Groups of Network Elements
      5.2.  Usage Example: Applying the Guidelines to The 'foo' Module"
    6.  Security Considerations
    7.  IANA Considerations
    8.  Implementation Status
-   9.  References
-     9.1.  Normative References
-     9.2.  Informative References
+   9.  Normative References
    Acknowledgments
    Authors' Addresses
 
@@ -134,7 +135,7 @@ Table of Contents
    interoperability between different vendors and platforms, fostering a
    more efficient and robust networking ecosystem.
 
-   Some examples of these device models are:
+   Some examples device models which can be managed:
 
    *  "ietf-routing-policy" [RFC8349]: This YANG model defines a generic
       data model for managing routing policies that can be applied to
@@ -424,11 +425,11 @@ Table of Contents
 
                   Figure 4: Usage Example for 'foo' Module
 
-5.  DMaaNM YANG Model
+5.  DMaNM YANG Model
 
 5.1.  Groups of Network Elements
 
-   <CODE BEGINS> file "grp-ntw-elements@2023-07-07.yang"
+   <CODE BEGINS> file "grp-ntw-elements@2023-10-23.yang"
    module grp-ntw-elements {
      yang-version 1.1;
      namespace "urn:ietf:params:xml:ns:yang:grp-ntw-elements";
@@ -443,11 +444,13 @@ Table of Contents
        Editor:   Oscar Gonzalez de Dios
                  <mailto:oscar.gonzalezdedios@telefonica.com>
        Editor:   Victor Lopez
-                 <mailto:victor.lopez@nokia.com>";
+                 <mailto:victor.lopez@nokia.com>
+       Editor:   Mohamed Boucadair
+                 <mailto:mohamed.boucadair@orange.com>";
 
      description "YANG model for group of network elements.";
 
-     revision "2023-07-07" {
+     revision "2023-10-23" {
        description "Initial revision.";
        reference "RFC XXXX: An Approach to Expose 'Device Models'
                             -as-'Network Models'";
@@ -488,7 +491,7 @@ Table of Contents
      organization "Example Organization";
      contact "example@example.com";
      description "YANG model for foo-dev.";
-     revision "2023-07-07" {
+     revision "2023-10-23" {
        description "Initial revision.";
        reference "RFC XXXX: YANG Model for foo-dev";
      }
@@ -592,9 +595,7 @@ Table of Contents
    of the model.  It is aimed at being removed if the document becomes
    RFC.
 
-9.  References
-
-9.1.  Normative References
+9.  Normative References
 
    [I-D.ietf-idr-bgp-model]
               Jethanandani, M., Patel, K., Hares, S., and J. Haas, "YANG
@@ -626,6 +627,17 @@ Table of Contents
               Shell (SSH)", RFC 6242, DOI 10.17487/RFC6242, June 2011,
               <https://www.rfc-editor.org/rfc/rfc6242>.
 
+   [RFC7149]  Boucadair, M. and C. Jacquenet, "Software-Defined
+              Networking: A Perspective from within a Service Provider
+              Environment", RFC 7149, DOI 10.17487/RFC7149, March 2014,
+              <https://www.rfc-editor.org/rfc/rfc7149>.
+
+   [RFC7426]  Haleplidis, E., Ed., Pentikousis, K., Ed., Denazis, S.,
+              Hadi Salim, J., Meyer, D., and O. Koufopavlou, "Software-
+              Defined Networking (SDN): Layers and Architecture
+              Terminology", RFC 7426, DOI 10.17487/RFC7426, January
+              2015, <https://www.rfc-editor.org/rfc/rfc7426>.
+
    [RFC8040]  Bierman, A., Bjorklund, M., and K. Watsen, "RESTCONF
               Protocol", RFC 8040, DOI 10.17487/RFC8040, January 2017,
               <https://www.rfc-editor.org/rfc/rfc8040>.
@@ -633,6 +645,19 @@ Table of Contents
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+   [RFC8199]  Bogdanovic, D., Claise, B., and C. Moberg, "YANG Module
+              Classification", RFC 8199, DOI 10.17487/RFC8199, July
+              2017, <https://www.rfc-editor.org/rfc/rfc8199>.
+
+   [RFC8299]  Wu, Q., Ed., Litkowski, S., Tomotaki, L., and K. Ogaki,
+              "YANG Data Model for L3VPN Service Delivery", RFC 8299,
+              DOI 10.17487/RFC8299, January 2018,
+              <https://www.rfc-editor.org/rfc/rfc8299>.
+
+   [RFC8309]  Wu, Q., Liu, W., and A. Farrel, "Service Models
+              Explained", RFC 8309, DOI 10.17487/RFC8309, January 2018,
+              <https://www.rfc-editor.org/rfc/rfc8309>.
 
    [RFC8340]  Bjorklund, M. and L. Berger, Ed., "YANG Tree Diagrams",
               BCP 215, RFC 8340, DOI 10.17487/RFC8340, March 2018,
@@ -657,41 +682,15 @@ Table of Contents
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
               <https://www.rfc-editor.org/rfc/rfc8446>.
 
-   [RFC8519]  Jethanandani, M., Agarwal, S., Huang, L., and D. Blair,
-              "YANG Data Model for Network Access Control Lists (ACLs)",
-              RFC 8519, DOI 10.17487/RFC8519, March 2019,
-              <https://www.rfc-editor.org/rfc/rfc8519>.
-
-9.2.  Informative References
-
-   [RFC7149]  Boucadair, M. and C. Jacquenet, "Software-Defined
-              Networking: A Perspective from within a Service Provider
-              Environment", RFC 7149, DOI 10.17487/RFC7149, March 2014,
-              <https://www.rfc-editor.org/rfc/rfc7149>.
-
-   [RFC7426]  Haleplidis, E., Ed., Pentikousis, K., Ed., Denazis, S.,
-              Hadi Salim, J., Meyer, D., and O. Koufopavlou, "Software-
-              Defined Networking (SDN): Layers and Architecture
-              Terminology", RFC 7426, DOI 10.17487/RFC7426, January
-              2015, <https://www.rfc-editor.org/rfc/rfc7426>.
-
-   [RFC8199]  Bogdanovic, D., Claise, B., and C. Moberg, "YANG Module
-              Classification", RFC 8199, DOI 10.17487/RFC8199, July
-              2017, <https://www.rfc-editor.org/rfc/rfc8199>.
-
-   [RFC8299]  Wu, Q., Ed., Litkowski, S., Tomotaki, L., and K. Ogaki,
-              "YANG Data Model for L3VPN Service Delivery", RFC 8299,
-              DOI 10.17487/RFC8299, January 2018,
-              <https://www.rfc-editor.org/rfc/rfc8299>.
-
-   [RFC8309]  Wu, Q., Liu, W., and A. Farrel, "Service Models
-              Explained", RFC 8309, DOI 10.17487/RFC8309, January 2018,
-              <https://www.rfc-editor.org/rfc/rfc8309>.
-
    [RFC8466]  Wen, B., Fioccola, G., Ed., Xie, C., and L. Jalil, "A YANG
               Data Model for Layer 2 Virtual Private Network (L2VPN)
               Service Delivery", RFC 8466, DOI 10.17487/RFC8466, October
               2018, <https://www.rfc-editor.org/rfc/rfc8466>.
+
+   [RFC8519]  Jethanandani, M., Agarwal, S., Huang, L., and D. Blair,
+              "YANG Data Model for Network Access Control Lists (ACLs)",
+              RFC 8519, DOI 10.17487/RFC8519, March 2019,
+              <https://www.rfc-editor.org/rfc/rfc8519>.
 
    [RFC8969]  Wu, Q., Ed., Boucadair, M., Ed., Lopez, D., Xie, C., and
               L. Geng, "A Framework for Automating Service and Network
@@ -722,3 +721,13 @@ Authors' Addresses
    Victor Lopez
    Nokia
    Email: victor.lopez@nokia.com
+
+
+   Mohamed Boucadair
+   Orange
+   Email: mohamed.boucadair@orange.com
+
+
+   Daniele Ceccarelli
+   Cisco
+   Email: dceccare@cisco.com

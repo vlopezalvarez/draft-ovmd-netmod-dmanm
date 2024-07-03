@@ -5,10 +5,10 @@
 Operations and Management Area Working Group               O. G. D. Dios
 Internet-Draft                                                Telefonica
 Intended status: Informational                                  V. Lopez
-Expires: 25 April 2024                                             Nokia
+Expires: 4 January 2025                                            Nokia
                                                             M. Boucadair
                                                                   Orange
-                                                         23 October 2023
+                                                             3 July 2024
 
 
        An Approach to Expose 'Device Models'-as-'Network Models'
@@ -59,11 +59,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 April 2024.
+   This Internet-Draft will expire on 4 January 2025.
 
 Copyright Notice
 
-   Copyright (c) 2023 IETF Trust and the persons identified as the
+   Copyright (c) 2024 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -266,14 +266,17 @@ Table of Contents
    will be prefixed using the standard prefix associated with the
    corresponding YANG imported modules, as shown in the following table.
 
-                   +========+=============+===========+
-                   | Prefix | Yang Module | Reference |
-                   +========+=============+===========+
-                   | xxxx   | xxxx        | xxx       |
-                   +--------+-------------+-----------+
+               +========+=====================+===========+
+               | Prefix | Yang Module         | Reference |
+               +========+=====================+===========+
+               | ntwdev | ietf-network-device | RFCXXX    |
+               +--------+---------------------+-----------+
 
-                          Table 1: Prefixes and
-                        corresponding YANG modules
+                 Table 1: Prefixes and corresponding YANG
+                                 modules
+
+   RFC Editor Note: Please replace XXXX with the RFC number assigned to
+   this document.  Please remove this note in that case.
 
 3.  Sample Use Cases
 
