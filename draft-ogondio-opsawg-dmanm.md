@@ -3,23 +3,23 @@ title: "An Approach to Expose 'Device Models'-as-'Network Models'"
 abbrev: "DMaNM"
 category: info
 
-docname: draft-ogondio-opsawg-dmanm-latest
+docname: draft-ovmd-netmod-dmanm-latest
 submissiontype: IETF  # also: "independent", "IAB", or "IRTF"
 number:
 date:
 consensus: true
 v: 3
 area: "Operations and Management"
-workgroup: "Operations and Management Area Working Group"
+workgroup: "Network Modeling Working Group"
 keyword:
  - Device models
  - Network models
 
 venue:
-  group: "Operations and Management Area Working Group"
+  group: "Network Modeling Working Group"
   type: "Working Group"
-  mail: "opsawg@ietf.org"
-  arch: "https://mailarchive.ietf.org/arch/browse/opsawg/"
+  mail: "netmod@ietf.org"
+  arch: "https://mailarchive.ietf.org/arch/browse/netmod/"
   github: "vlopezalvarez/draft-ogondio-opsawg-dmanm"
   latest: "https://vlopezalvarez.github.io/draft-ogondio-opsawg-dmanm/draft-ogondio-opsawg-dmanm.html"
 
@@ -36,6 +36,10 @@ author:
     fullname: Mohamed Boucadair
     organization: Orange
     email: "mohamed.boucadair@orange.com"
+ -
+    fullname: Daniele Ceccarelli
+    organization: Cisco
+    email: "dceccare@cisco.com"
 
 normative:
 
@@ -50,13 +54,13 @@ This document describes an approach for exposing Device Models as Network Models
 
 # Introduction
 
-Network operators need to efficiently manage  network elements throughout their infrastructure. By implementing network-wide management and configuration practices, operators can achieve centralized control and visibility over their network elements. This enables them to streamline operations, monitor performance, and promptly respond to network events. Moreover, network-wide management facilitates the enforcement of standardized policies and configurations, thus ensuring consistent behavior and minimizing the risk of errors or misconfigurations that may result in service disruptions. Additionally, it enables operators to implement proactive actions such as performance optimization, load balancing, and security policies across the entire network, fostering a more secure and efficient infrastructure.
+Network operators need to efficiently manage network elements throughout their infrastructure. By implementing network-wide management and configuration practices, operators can achieve centralized control and visibility over their network elements. This enables them to streamline operations, monitor performance, and promptly respond to network events. Moreover, network-wide management facilitates the enforcement of standardized policies and configurations, thus ensuring consistent behavior and minimizing the risk of errors or misconfigurations that may result in service disruptions. Additionally, it enables operators to implement proactive actions such as performance optimization, load balancing, and security policies across the entire network, fostering a more secure and efficient infrastructure.
 
 The ability to reuse device models may play a crucial role in network management. Multiple teams within an organization, such as network engineering, operations, and planning, can benefit from accessing these device models. These models serve as a common language for understanding and configuring network elements, ensuring consistency and interoperability across different teams and systems. The utilization of models from various teams is a key requirement for network operators.
 
 The IETF has made remarkable progress in defining device models to manage network element capabilities. These device models, often represented using YANG data modeling language, provide a structured, standardized approach to manage various network devices and their features. By leveraging YANG models, network operators can effectively manage the network element functionalities. These models not only streamline network management but also promote interoperability between different vendors and platforms, fostering a more efficient and robust networking ecosystem.
 
-Some examples of these device models are:
+Some examples device models which can be managed:
 
 * "ietf-routing-policy" {{!RFC8349}}: This YANG model defines a generic data model for managing routing policies that can be applied to various routing protocols. The model provides a framework for creating, modifying, and applying routing policies, which allows defining how routes are selected, filtered, and modified. The "ietf-routing-policy" model covers features like policy definition, policy attachment, route filters, and route actions.
 
