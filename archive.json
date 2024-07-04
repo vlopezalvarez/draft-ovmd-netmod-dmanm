@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-07-02T01:23:54.610574+00:00",
+  "timestamp": "2024-07-04T01:23:44.061335+00:00",
   "repo": "vlopezalvarez/draft-ogondio-opsawg-dmanm",
   "labels": [
     {
@@ -84,26 +84,311 @@
       "id": "PR_kwDOJ4N0Cs5disnd",
       "title": "ntwdev is only an example",
       "url": "https://github.com/vlopezalvarez/draft-ogondio-opsawg-dmanm/pull/2",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "boucadair",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2023-10-23T15:00:43Z",
-      "updatedAt": "2023-10-23T15:00:45Z",
+      "updatedAt": "2024-07-03T14:56:40Z",
       "baseRepository": "vlopezalvarez/draft-ogondio-opsawg-dmanm",
       "baseRefName": "main",
       "baseRefOid": "9fa10c2df900dee66c72dbd984b3fcff96f96075",
       "headRepository": "vlopezalvarez/draft-ogondio-opsawg-dmanm",
       "headRefName": "boucadair-patch-2",
       "headRefOid": "ee7af708d16d731ebc32426032a7e39b349d86f8",
+      "closedAt": "2024-07-03T14:56:39Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "body": "#3 ",
+          "createdAt": "2024-07-03T14:56:39Z",
+          "updatedAt": "2024-07-03T14:56:39Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 3,
+      "id": "PR_kwDOJ4N0Cs50UCOH",
+      "title": "Create draft-ovmd-netmod-dmanm.md",
+      "url": "https://github.com/vlopezalvarez/draft-ogondio-opsawg-dmanm/pull/3",
+      "state": "OPEN",
+      "author": "oscargdd",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-07-03T11:21:00Z",
+      "updatedAt": "2024-07-03T14:56:20Z",
+      "baseRepository": "vlopezalvarez/draft-ogondio-opsawg-dmanm",
+      "baseRefName": "main",
+      "baseRefOid": "9fa10c2df900dee66c72dbd984b3fcff96f96075",
+      "headRepository": "vlopezalvarez/draft-ogondio-opsawg-dmanm",
+      "headRefName": "netmod-version2",
+      "headRefOid": "b88eaa9a0eb019c0a9d870dcf3bc96c1b2d0f3a1",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOJ4N0Cs6AhSt5",
+          "commit": {
+            "abbreviatedOid": "b88eaa9"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "Thanks, Oscar. Please find some edits.",
+          "createdAt": "2024-07-03T11:37:08Z",
+          "updatedAt": "2024-07-03T11:58:45Z",
+          "comments": [
+            {
+              "originalPosition": 24,
+              "body": "```suggestion\r\n  latest: \"https://vlopezalvarez.github.io/draft-ogondio-opsawg-dmanm/draft-ovmd-netmod-dmanm.html\"\r\n```",
+              "createdAt": "2024-07-03T11:37:08Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 51,
+              "body": "```suggestion\r\nThis document describes an approach for exposing Device Models as Network Models (DMaNM). In particular, this document provides guidance for structuring a data model to facilitate the reuse of device models within the customer-facing interface of controllers (e.g., Software-Defined Networking (SDN) controllers). The objective of this approach is to enhance the reusability of device models in various network scenarios and ease the mapping between network/service models with device models and ensure lossless mapping between the various layers.\r\n```",
+              "createdAt": "2024-07-03T11:38:44Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 57,
+              "body": "```suggestion\r\nNetwork operators need to efficiently manage network elements (including, embedded service functions) throughout their infrastructure. By implementing network-wide management and configuration practices, operators can achieve centralized control and better visibility over their network elements. Doing so enables them to streamline operations, monitor performance, and promptly respond to network events. Moreover, network-wide management facilitates the enforcement of standardized policies and configurations, thus, ensuring consistent behavior and minimizing the risk of errors or misconfigurations that may result in service disruptions. Additionally, that approach enables operators to implement proactive actions such as performance optimization, efficient load balancing, and security policies across the entire network, fostering a more secure and efficient infrastructure.\r\n```",
+              "createdAt": "2024-07-03T11:40:35Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 59,
+              "body": "```suggestion\r\nThe ability to reuse device models may play a crucial role in network management. Multiple teams within an organization, such as network engineering, operations, and planning, can benefit from leveraging and using these device models. These models may serve as a common \"language\" for understanding and managing network services and elements, ensuring consistency and interoperability across different teams and systems. The utilization of models from various teams is a key requirement for network operators.\r\n```",
+              "createdAt": "2024-07-03T11:42:29Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 61,
+              "body": "```suggestion\r\nThe IETF has made remarkable progress in defining device models to manage network element capabilities. These device models, often represented using YANG data modeling language {{!RFC7950}}, provide a structured, standardized approach to manage various network devices and their features. By leveraging YANG models, network operators can effectively manage the network element functionalities. These models not only streamline network management but also promote interoperability between different vendors and platforms, fostering a more efficient and robust networking ecosystem.\r\n```",
+              "createdAt": "2024-07-03T11:43:15Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 63,
+              "body": "```suggestion\r\nSome examples device models which can be to manage specific network functions are listed below:\r\n```",
+              "createdAt": "2024-07-03T11:43:47Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 70,
+              "body": "```suggestion\r\n\r\n* \"ietf-nat\" {{?RFC8512}} defines a YANG module for the Network Address Translation (NAT) function. Various translation flavors are covered: Network Address Translation from IPv4 to IPv4 (NAT44), Network Address and Protocol Translation from IPv6 Clients to IPv4 Servers (NAT64), customer-side translator (CLAT), Stateless IP/ICMP Translation (SIIT), Explicit Address Mappings (EAM) for SIIT, IPv6-to-IPv6 Network Prefix Translation (NPTv6), and Destination NAT.\r\n```",
+              "createdAt": "2024-07-03T11:45:54Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 67,
+              "body": "```suggestion\r\n* \"ietf-bgp-policy\" {{?I-D.ietf-idr-bgp-model}}: This YANG model defines a data model for the Border Gateway Protocol (BGP). The \"ietf-bgp-policy\" model is designed to configure and manage BGP routers and sessions, as well as provide a representation of BGP operational state data. The model covers BGP-specific features such as peer configuration, address families, route filters, and route actions. The model is intended to work alongside the \"ietf-routing-policy\" model to manage BGP routing policies.\r\n```",
+              "createdAt": "2024-07-03T11:46:04Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 65,
+              "body": "```suggestion\r\n* \"ietf-routing-policy\" {{?RFC8349}}: This YANG model defines a generic data model for managing routing policies that can be applied to various routing protocols. The model provides a framework for creating, modifying, and applying routing policies, which allows defining how routes are selected, filtered, and modified. The \"ietf-routing-policy\" model covers features like policy definition, policy attachment, route filters, and route actions.\r\n```",
+              "createdAt": "2024-07-03T11:46:12Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 69,
+              "body": "```suggestion\r\n* \"ietf-access-list\" {{?RFC8519}}: This YANG model provides a data model for configuring and managing network Access Control Lists (ACLs). This model provides a generic structure for representing ACLs, along with the ability to define rules for permitting, denying, or assigning a specific action to matching packets.\r\n```",
+              "createdAt": "2024-07-03T11:46:23Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 71,
+              "body": "```suggestion\r\nSoftware-Defined Networking (SDN) {{!RFC7149}}{{!RFC7426}} controllers facilitate seamless communication and coordination between high-level management systems and the underlying network infrastructure. This arrangement enables efficient translation of network-wide policies and objectives, defined by the Operations Support Systems (OSS), into granular, device-specific configurations and commands for the network elements. A similar concept applies for orchestration scenarios like in Network Slicing {{?RFC9543}}. SDN controllers are typically placed as intermediate entities between the OSS and the network elements. {{SDNsce}} represents such scenario, where an SDN controller exposes its customer-facing interface to the OSS or orchestration layer.\r\n```",
+              "createdAt": "2024-07-03T11:48:14Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 92,
+              "body": "```suggestion\r\n{{SDNsce}} illustrates the hierarchical relationship between the OSS, SDN controllers, and the network elements. In this example, the OSS acts as the central management system responsible for overseeing the entire network. An orchestrator acts with a similar role in scenarios like Network Slicing. An SDN controller, positioned in the middle, acts as an intermediary, facilitating communication, and coordination between the OSS and the network elements. At the bottom, the network elements are directly controlled and configured by an SDN controller. This architecture enables efficient translation of high-level network policies into device-specific configurations, ultimately streamlining network management and decoupling the systems from the network evolution.\r\n```",
+              "createdAt": "2024-07-03T11:49:32Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 94,
+              "body": "```suggestion\r\nDevice models were defined to be applicable in the network-facing interface of an SDN controller. As a result, these models do not inherently expose/capture the necessary network concepts to make them directly applicable in the customer-facing interface of an SDN controller.\r\n```",
+              "createdAt": "2024-07-03T11:50:05Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 124,
+              "body": "```suggestion\r\n  Names of data nodes and other data model objects are prefixed using the standard prefix associated with the corresponding YANG imported modules, as shown in {{tab-prefixes}}.\r\n```",
+              "createdAt": "2024-07-03T11:50:58Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 131,
+              "body": "```suggestion\r\n> RFC Editor Note:\r\n```",
+              "createdAt": "2024-07-03T11:51:09Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 132,
+              "body": "```suggestion\r\n> : Please replace XXXX with the RFC number assigned to this document. Please remove this note in that case.\r\n```",
+              "createdAt": "2024-07-03T11:51:20Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 138,
+              "body": "```suggestion\r\n\"Device Config\"-as-a-Service involves the use of device models by an OSS to configure network elements through an SDN controller. In this scenario, an SDN controller acts as an intermediary between the OSS and the network elements, providing a configuration service for each network element.\r\n```",
+              "createdAt": "2024-07-03T11:52:00Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 142,
+              "body": "```suggestion\r\nThrough an SDN controller, the OSS can send the configuration instructions based on the device models to the respective network elements. The SDN controller translates and applies the configuration, ensuring consistency and correctness across the network. Moreover, the mediation of an SDN controller facilitates the access to the network elements from several users, applications or OSS minimizing the impact on the device.\r\n```",
+              "createdAt": "2024-07-03T11:52:20Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 160,
+              "body": "```suggestion\r\n{{grp-ntw-elements-tree-st}} represents the tree of the proposed YANG model.\r\n```",
+              "createdAt": "2024-07-03T11:52:45Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 103,
+              "body": "```suggestion\r\n\r\nThe meanings of the symbols in the YANG tree diagrams are defined in {{?RFC8340}}.\r\n```",
+              "createdAt": "2024-07-03T11:53:53Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 223,
+              "body": "```suggestion\r\n<CODE BEGINS> file \"grp-ntw-elements@2024-07-03.yang\"\r\n```",
+              "createdAt": "2024-07-03T11:54:54Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 231,
+              "body": "```suggestion\r\n    \"IETF NETMOD Working Group\";\r\n```",
+              "createdAt": "2024-07-03T11:55:11Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 233,
+              "body": "```suggestion\r\n    \"WG Web:  <https://datatracker.ietf.org/wg/netmod/>\r\n```",
+              "createdAt": "2024-07-03T11:55:19Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 234,
+              "body": "```suggestion\r\n    WG List:  <mailto:netmod@ietf.org>\r\n```",
+              "createdAt": "2024-07-03T11:55:27Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 245,
+              "body": "```suggestion\r\n  revision \"2024-07-03\" {\r\n```",
+              "createdAt": "2024-07-03T11:55:36Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 247,
+              "body": "```suggestion\r\n    reference\r\n      \"RFC XXXX: An Approach to Expose 'Device Models'\r\n```",
+              "createdAt": "2024-07-03T11:55:53Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 248,
+              "body": "```suggestion\r\n                    -as-'Network Models'\";\r\n```",
+              "createdAt": "2024-07-03T11:56:12Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 253,
+              "body": "```suggestion\r\n    description\r\n      \"List of groups of network elements.\";\r\n```",
+              "createdAt": "2024-07-03T11:56:28Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 257,
+              "body": "```suggestion\r\n      description\r\n        \"Group of network element identifiers.\";\r\n```",
+              "createdAt": "2024-07-03T11:56:42Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 262,
+              "body": "```suggestion\r\n      description\r\n        \"List of network elements.\";\r\n```",
+              "createdAt": "2024-07-03T11:56:52Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 266,
+              "body": "```suggestion\r\n        description\r\n          \"Network element identifier.\";\r\n```",
+              "createdAt": "2024-07-03T11:57:01Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 288,
+              "body": "```suggestion\r\n  revision \"2024-07-03\" {\r\n```",
+              "createdAt": "2024-07-03T11:57:13Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 355,
+              "body": "```suggestion\r\n   URI:  urn:ietf:params:xml:ns:yang:grp-ntw-elements\r\n```",
+              "createdAt": "2024-07-03T11:57:52Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 363,
+              "body": "```suggestion\r\n   Namespace:  urn:ietf:params:xml:ns:yang:grp-ntw-elements\r\n```",
+              "createdAt": "2024-07-03T11:58:04Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 364,
+              "body": "```suggestion\r\n   Prefix:  grp\r\n```",
+              "createdAt": "2024-07-03T11:58:15Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            },
+            {
+              "originalPosition": 365,
+              "body": "```suggestion\r\n   Reference:  RFC XXXX\r\n```",
+              "createdAt": "2024-07-03T11:58:23Z",
+              "updatedAt": "2024-07-03T11:58:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJ4N0Cs6AjJbQ",
+          "commit": {
+            "abbreviatedOid": "b88eaa9"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-07-03T14:56:20Z",
+          "updatedAt": "2024-07-03T14:56:20Z",
+          "comments": [
+            {
+              "originalPosition": 128,
+              "body": "```suggestion\r\n| xxxx  |xxxx    | xxx      |\r\n```\r\n\r\nntwdev is only an example.",
+              "createdAt": "2024-07-03T14:56:20Z",
+              "updatedAt": "2024-07-03T14:56:20Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
