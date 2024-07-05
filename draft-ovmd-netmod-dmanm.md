@@ -225,135 +225,18 @@ module: foo-ntwdev
 
 ~~~~~~~~~~
 <CODE BEGINS> file "ietf-grp-ntw-elements@2024-07-05.yang"
-
-module ietf-grp-ntw-elements {
-  yang-version 1.1;
-  namespace "urn:ietf:params:xml:ns:yang:ietf-grp-ntw-elements";
-  prefix "grp";
-
-  organization
-    "IETF NETMOD Working Group";
-  contact
-    "WG Web:  <https://datatracker.ietf.org/wg/netmod/>
-    WG List:  <mailto:netmod@ietf.org>
-
-    Editor:   Oscar Gonzalez de Dios
-              <mailto:oscar.gonzalezdedios@telefonica.com>
-    Editor:   Victor Lopez
-              <mailto:victor.lopez@nokia.com>
-    Editor:   Mohamed Boucadair
-              <mailto:mohamed.boucadair@orange.com>
-    Editor:   Daniele Ceccarelli
-              <mailto:dceccare@cisco.com>";
-
-  description "YANG model for group of network elements.";
-
-  revision "2023-10-23" {
-    description "Initial revision.";
-    reference
-      "RFC XXXX: An Approach to Expose 'Device Models'
-      -as-'Network Models'";
-  }
-
-  revision "2024-07-05" {
-    description "Updated naming for ietf-grp-ntw-elements.";
-    reference
-      "RFC XXXX: An Approach to Expose 'Device Models'
-      -as-'Network Models'";
-  }
-
-  list grp-ntw-elements {
-    key "grp-ne-id";
-    description
-      "List of groups of network elements.";
-
-    leaf grp-ne-id {
-      type string;
-      description
-         "Group of network element identifier.";
-    }
-
-    list ntw-element {
-      key "ne-id";
-      description
-         "List of network elements.";
-
-      leaf ne-id {
-        type string;
-        description
-         "Network element identifier.";
-      }
-    }
-  }
-}
+{::include-fold ./Yang/ietf-grp-ntw-elements.yang}
 <CODE ENDS>
+~~~
 ~~~~~~~~~~
 
 ## Usage Example: Applying the Guidelines to The 'foo' Module"
 
-~~~~~~~~~~
-module foo-ntwdev {
-  namespace "urn:example:foo-ntwdev";
-  prefix "netdevfoo";
-
-  import foo {
-    prefix "foo";
-  }
-
-  organization "Example Organization";
-  contact "example@example.com";
-  description "YANG model for foo-dev.";
-  revision "2023-10-23" {
-    description "Initial revision.";
-    reference "RFC XXXX: YANG Model for foo-dev";
-  }
-
-  revision "2024-07-05" {
-    description "Updated list of grp-ntw-elements.";
-    reference "RFC XXXX: YANG Model for foo-dev";
-  }
-
-  leaf foo {
-    type leafref {
-      path "/foo:foo";
-    }
-    description "Reference to foo leaf from foo.yang";
-  }
-
-  container deployment {
-    description "Deployment container.";
-
-    list ntw-element {
-      key "ne-id";
-      description "List of network elements.";
-
-      leaf ne-id {
-        type string;
-        description "Network element identifier.";
-      }
-      leaf devmod-alias {
-        type string;
-        description "Device module alias for the deployment.";
-      }
-    }
-
-    list grp-ntw-elements {
-      key "grp-ne-id";
-      description "List of group of network elements.";
-
-      leaf grp-ne-id {
-        type string;
-        description "Group of network element identifier.";
-      }
-      leaf devmod-alias {
-        type string;
-        description "Device module alias for the deployment.";
-      }
-    }
-  }
-}
-~~~~~~~~~~
-
+~~~
+<CODE BEGINS> file "example-foo-ntwdev@2024-07-05.yang"
+{::include-fold ./Yang/example-foo-ntwdev.yang}
+<CODE ENDS>
+~~~
 
 # Security Considerations
 

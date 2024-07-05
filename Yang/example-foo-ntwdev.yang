@@ -9,16 +9,10 @@ module foo-ntwdev {
   organization "Example Organization";
   contact "example@example.com";
   description "YANG model for foo-dev.";
-  revision "2023-10-23" {
-    description
-      "Initial revision.";
-    reference
-      "RFC XXXX: YANG Model for foo-dev";
-  }
 
   revision "2024-07-05" {
     description
-      "Updated list of grp-ntw-elements.";
+      "Initial version.";
     reference
       "RFC XXXX: YANG Model for foo-dev";
   }
