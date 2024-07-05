@@ -1520,7 +1520,6 @@ module: foo-ntwdev
 <div class="breakable sourcecode" id="section-5.1-1">
 <pre>&lt;CODE BEGINS&gt; file "ietf-grp-ntw-elements@2024-07-05.yang"
 
-
 module ietf-grp-ntw-elements {
   yang-version 1.1;
   namespace "urn:ietf:params:xml:ns:yang:ietf-grp-ntw-elements";
@@ -1541,17 +1540,11 @@ module ietf-grp-ntw-elements {
     Editor:   Daniele Ceccarelli
               &lt;mailto:dceccare@cisco.com&gt;";
 
-  description "YANG model for group of network elements.";
-
-  revision "2023-10-23" {
-    description "Initial revision.";
-    reference
-      "RFC XXXX: An Approach to Expose 'Device Models'
-      -as-'Network Models'";
-  }
+  description
+    "YANG model for group of network elements.";
 
   revision "2024-07-05" {
-    description "Updated naming for ietf-grp-ntw-elements.";
+    description "Initial version.";
     reference
       "RFC XXXX: An Approach to Expose 'Device Models'
       -as-'Network Models'";
@@ -1565,18 +1558,18 @@ module ietf-grp-ntw-elements {
     leaf grp-ne-id {
       type string;
       description
-         "Group of network element identifier.";
+        "Group of network element identifier.";
     }
 
     list ntw-element {
       key "ne-id";
       description
-         "List of network elements.";
+        "List of network elements.";
 
       leaf ne-id {
         type string;
         description
-         "Network element identifier.";
+          "Network element identifier.";
       }
     }
   }
@@ -1591,8 +1584,9 @@ module ietf-grp-ntw-elements {
         <h3 id="name-usage-example-applying-the-">
 <a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-usage-example-applying-the-" class="section-name selfRef">Usage Example: Applying the Guidelines to The 'foo' Module"</a>
         </h3>
-<div class="alignLeft art-text artwork" id="section-5.2-1">
-<pre>
+<div class="breakable sourcecode" id="section-5.2-1">
+<pre>&lt;CODE BEGINS&gt; file "example-foo-ntwdev@2024-07-05.yang"
+
 module foo-ntwdev {
   namespace "urn:example:foo-ntwdev";
   prefix "netdevfoo";
@@ -1604,56 +1598,63 @@ module foo-ntwdev {
   organization "Example Organization";
   contact "example@example.com";
   description "YANG model for foo-dev.";
-  revision "2023-10-23" {
-    description "Initial revision.";
-    reference "RFC XXXX: YANG Model for foo-dev";
-  }
 
   revision "2024-07-05" {
-    description "Updated list of grp-ntw-elements.";
-    reference "RFC XXXX: YANG Model for foo-dev";
+    description
+      "Initial version.";
+    reference
+      "RFC XXXX: YANG Model for foo-dev";
   }
 
   leaf foo {
     type leafref {
       path "/foo:foo";
     }
-    description "Reference to foo leaf from foo.yang";
+    description
+      "Reference to foo leaf from foo.yang";
   }
 
   container deployment {
-    description "Deployment container.";
+    description
+      "Deployment container.";
 
     list ntw-element {
       key "ne-id";
-      description "List of network elements.";
+      description
+        "List of network elements.";
 
       leaf ne-id {
         type string;
-        description "Network element identifier.";
+        description
+          "Network element identifier.";
       }
       leaf devmod-alias {
         type string;
-        description "Device module alias for the deployment.";
+        description
+          "Device module alias for the deployment.";
       }
     }
 
     list grp-ntw-elements {
       key "grp-ne-id";
-      description "List of group of network elements.";
+      description
+        "List of group of network elements.";
 
       leaf grp-ne-id {
         type string;
-        description "Group of network element identifier.";
+        description
+          "Group of network element identifier.";
       }
       leaf devmod-alias {
         type string;
-        description "Device module alias for the deployment.";
+        description
+          "Device module alias for the deployment.";
       }
     }
   }
 }
-</pre><a href="#section-5.2-1" class="pilcrow">¶</a>
+
+&lt;CODE ENDS&gt;</pre><a href="#section-5.2-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
