@@ -2,17 +2,19 @@
 
 
 
-Operations and Management Area Working Group               O. G. D. Dios
+Network Modeling Working Group                             O. G. D. Dios
 Internet-Draft                                                Telefonica
 Intended status: Informational                                  V. Lopez
 Expires: 6 January 2025                                            Nokia
                                                             M. Boucadair
                                                                   Orange
+                                                           D. Ceccarelli
+                                                                   Cisco
                                                              5 July 2024
 
 
        An Approach to Expose 'Device Models'-as-'Network Models'
-                   draft-ogondio-opsawg-dmanm-latest
+                     draft-ovmd-netmod-dmanm-latest
 
 Abstract
 
@@ -32,14 +34,13 @@ About This Document
    The latest revision of this draft can be found at
    https://vlopezalvarez.github.io/draft-ogondio-opsawg-dmanm/draft-
    ogondio-opsawg-dmanm.html.  Status information for this document may
-   be found at https://datatracker.ietf.org/doc/draft-ogondio-opsawg-
+   be found at https://datatracker.ietf.org/doc/draft-ovmd-netmod-
    dmanm/.
 
-   Discussion of this document takes place on the Operations and
-   Management Area Working Group Working Group mailing list
-   (mailto:opsawg@ietf.org), which is archived at
-   https://mailarchive.ietf.org/arch/browse/opsawg/.  Subscribe at
-   https://www.ietf.org/mailman/listinfo/opsawg/.
+   Discussion of this document takes place on the Network Modeling
+   Working Group Working Group mailing list (mailto:netmod@ietf.org),
+   which is archived at https://mailarchive.ietf.org/arch/browse/
+   netmod/.  Subscribe at https://www.ietf.org/mailman/listinfo/netmod/.
 
    Source for this draft and an issue tracker can be found at
    https://github.com/vlopezalvarez/draft-ogondio-opsawg-dmanm.
@@ -134,7 +135,7 @@ Table of Contents
    interoperability between different vendors and platforms, fostering a
    more efficient and robust networking ecosystem.
 
-   Some examples of these device models are:
+   Some examples device models which can be managed:
 
    *  "ietf-routing-policy" [RFC8349]: This YANG model defines a generic
       data model for managing routing policies that can be applied to
@@ -725,3 +726,8 @@ Authors' Addresses
    Mohamed Boucadair
    Orange
    Email: mohamed.boucadair@orange.com
+
+
+   Daniele Ceccarelli
+   Cisco
+   Email: dceccare@cisco.com

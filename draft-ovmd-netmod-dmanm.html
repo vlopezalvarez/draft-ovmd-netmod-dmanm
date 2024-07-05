@@ -8,13 +8,14 @@
 <meta content="Oscar Gonzalez de Dios" name="author">
 <meta content="Victor Lopez" name="author">
 <meta content="Mohamed Boucadair" name="author">
+<meta content="Daniele Ceccarelli" name="author">
 <meta content="
        This document describes an approach for exposing Device Models as Network Models (DMaNM). In particular, this document provides guidance for structuring a data model to facilitate the reuse of device models within the customer-facing interface of Software-Defined Networking (SDN) controllers. The objective of this approach is to enhance the reusability of device models in various network scenarios and ease the mapping between network/service models with device models. 
     " name="description">
 <meta content="xml2rfc 3.22.0" name="generator">
 <meta content="Device models" name="keyword">
 <meta content="Network models" name="keyword">
-<meta content="draft-ogondio-opsawg-dmanm-latest" name="ietf.draft">
+<meta content="draft-ovmd-netmod-dmanm-latest" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.22.0
     Python 3.12.3
@@ -30,7 +31,7 @@
     setuptools 69.5.1
     wcwidth 0.2.13
 -->
-<link href="draft-ogondio-opsawg-dmanm.xml" rel="alternate" type="application/rfc+xml">
+<link href="draft-ovmd-netmod-dmanm.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
 <style type="text/css">@font-face {
   font-family: 'Lora';
@@ -1039,9 +1040,9 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <div id="internal-metadata" class="document-information">
 <dl id="identifiers">
 <dt class="label-workgroup">Workgroup:</dt>
-<dd class="workgroup">Operations and Management Area Working Group</dd>
+<dd class="workgroup">Network Modeling Working Group</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
-<dd class="internet-draft">draft-ogondio-opsawg-dmanm-latest</dd>
+<dd class="internet-draft">draft-ovmd-netmod-dmanm-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
 <time datetime="2024-07-05" class="published">5 July 2024</time>
@@ -1064,6 +1065,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <div class="author-name">M. Boucadair</div>
 <div class="org">Orange</div>
 </div>
+<div class="author">
+      <div class="author-name">D. Ceccarelli</div>
+<div class="org">Cisco</div>
+</div>
 </dd>
 </dl>
 </div>
@@ -1079,12 +1084,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
 <p id="section-note.1-2">
         The latest revision of this draft can be found at <span><a href="https://vlopezalvarez.github.io/draft-ogondio-opsawg-dmanm/draft-ogondio-opsawg-dmanm.html">https://vlopezalvarez.github.io/draft-ogondio-opsawg-dmanm/draft-ogondio-opsawg-dmanm.html</a></span>.
-        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-ogondio-opsawg-dmanm/">https://datatracker.ietf.org/doc/draft-ogondio-opsawg-dmanm/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-ovmd-netmod-dmanm/">https://datatracker.ietf.org/doc/draft-ovmd-netmod-dmanm/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
 <p id="section-note.1-3">
         Discussion of this document takes place on the
-        Operations and Management Area Working Group Working Group mailing list (<span><a href="mailto:opsawg@ietf.org">mailto:opsawg@ietf.org</a></span>),
-        which is archived at <span><a href="https://mailarchive.ietf.org/arch/browse/opsawg/">https://mailarchive.ietf.org/arch/browse/opsawg/</a></span>.
-        Subscribe at <span><a href="https://www.ietf.org/mailman/listinfo/opsawg/">https://www.ietf.org/mailman/listinfo/opsawg/</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
+        Network Modeling Working Group Working Group mailing list (<span><a href="mailto:netmod@ietf.org">mailto:netmod@ietf.org</a></span>),
+        which is archived at <span><a href="https://mailarchive.ietf.org/arch/browse/netmod/">https://mailarchive.ietf.org/arch/browse/netmod/</a></span>.
+        Subscribe at <span><a href="https://www.ietf.org/mailman/listinfo/netmod/">https://www.ietf.org/mailman/listinfo/netmod/</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
 <p id="section-note.1-4">Source for this draft and an issue tracker can be found at
         <span><a href="https://github.com/vlopezalvarez/draft-ogondio-opsawg-dmanm">https://github.com/vlopezalvarez/draft-ogondio-opsawg-dmanm</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
 </section>
@@ -1213,10 +1218,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">Network operators need to efficiently manage  network elements throughout their infrastructure. By implementing network-wide management and configuration practices, operators can achieve centralized control and visibility over their network elements. This enables them to streamline operations, monitor performance, and promptly respond to network events. Moreover, network-wide management facilitates the enforcement of standardized policies and configurations, thus ensuring consistent behavior and minimizing the risk of errors or misconfigurations that may result in service disruptions. Additionally, it enables operators to implement proactive actions such as performance optimization, load balancing, and security policies across the entire network, fostering a more secure and efficient infrastructure.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-1">Network operators need to efficiently manage network elements throughout their infrastructure. By implementing network-wide management and configuration practices, operators can achieve centralized control and visibility over their network elements. This enables them to streamline operations, monitor performance, and promptly respond to network events. Moreover, network-wide management facilitates the enforcement of standardized policies and configurations, thus ensuring consistent behavior and minimizing the risk of errors or misconfigurations that may result in service disruptions. Additionally, it enables operators to implement proactive actions such as performance optimization, load balancing, and security policies across the entire network, fostering a more secure and efficient infrastructure.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">The ability to reuse device models may play a crucial role in network management. Multiple teams within an organization, such as network engineering, operations, and planning, can benefit from accessing these device models. These models serve as a common language for understanding and configuring network elements, ensuring consistency and interoperability across different teams and systems. The utilization of models from various teams is a key requirement for network operators.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">The IETF has made remarkable progress in defining device models to manage network element capabilities. These device models, often represented using YANG data modeling language, provide a structured, standardized approach to manage various network devices and their features. By leveraging YANG models, network operators can effectively manage the network element functionalities. These models not only streamline network management but also promote interoperability between different vendors and platforms, fostering a more efficient and robust networking ecosystem.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">Some examples of these device models are:<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-4">Some examples device models which can be managed:<a href="#section-1-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1-5.1">
           <p id="section-1-5.1.1">"ietf-routing-policy" <span>[<a href="#RFC8349" class="cite xref">RFC8349</a>]</span>: This YANG model defines a generic data model for managing routing policies that can be applied to various routing protocols. The model provides a framework for creating, modifying, and applying routing policies, which allows defining how routes are selected, filtered, and modified. The "ietf-routing-policy" model covers features like policy definition, policy attachment, route filters, and route actions.<a href="#section-1-5.1.1" class="pilcrow">¶</a></p>
@@ -1802,6 +1807,14 @@ module foo-ntwdev {
 <div class="email">
 <span>Email:</span>
 <a href="mailto:mohamed.boucadair@orange.com" class="email">mohamed.boucadair@orange.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Daniele Ceccarelli</span></div>
+<div dir="auto" class="left"><span class="org">Cisco</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:dceccare@cisco.com" class="email">dceccare@cisco.com</a>
 </div>
 </address>
 </section>
