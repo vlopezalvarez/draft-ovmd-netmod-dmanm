@@ -2,7 +2,7 @@
 
 
 
-Network Modeling Working Group                             O. G. D. Dios
+Network Modeling                                           O. G. D. Dios
 Internet-Draft                                                Telefonica
 Intended status: Informational                                  V. Lopez
 Expires: 6 January 2025                                            Nokia
@@ -25,25 +25,26 @@ Abstract
    Defined Networking (SDN) controllers.  The objective of this approach
    is to enhance the reusability of device models in various network
    scenarios and ease the mapping between network/service models with
-   device models.
+   device models and ensure lossless mapping between the various layers.
 
 About This Document
 
    This note is to be removed before publishing as an RFC.
 
    The latest revision of this draft can be found at
-   https://vlopezalvarez.github.io/draft-ogondio-opsawg-dmanm/draft-
-   ogondio-opsawg-dmanm.html.  Status information for this document may
-   be found at https://datatracker.ietf.org/doc/draft-ovmd-netmod-
-   dmanm/.
+   https://vlopezalvarez.github.io/vlopezalvarez-draft-ovmd-netmod-
+   dmanm/draft-ovmd-netmod-dmanm.html.  Status information for this
+   document may be found at https://datatracker.ietf.org/doc/draft-ovmd-
+   netmod-dmanm/.
 
    Discussion of this document takes place on the Network Modeling
-   Working Group Working Group mailing list (mailto:netmod@ietf.org),
-   which is archived at https://mailarchive.ietf.org/arch/browse/
-   netmod/.  Subscribe at https://www.ietf.org/mailman/listinfo/netmod/.
+   Working Group mailing list (mailto:netmod@ietf.org), which is
+   archived at https://mailarchive.ietf.org/arch/browse/netmod/.
+   Subscribe at https://www.ietf.org/mailman/listinfo/netmod/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/vlopezalvarez/draft-ogondio-opsawg-dmanm.
+   https://github.com/vlopezalvarez/vlopezalvarez-draft-ovmd-netmod-
+   dmanm.
 
 Status of This Memo
 
@@ -96,46 +97,50 @@ Table of Contents
    6.  Security Considerations
    7.  IANA Considerations
    8.  Implementation Status
-   9.  Normative References
+   9.  References
+     9.1.  Normative References
+     9.2.  Informative References
    Acknowledgments
    Authors' Addresses
 
 1.  Introduction
 
    Network operators need to efficiently manage network elements
-   throughout their infrastructure.  By implementing network-wide
-   management and configuration practices, operators can achieve
-   centralized control and visibility over their network elements.  This
-   enables them to streamline operations, monitor performance, and
-   promptly respond to network events.  Moreover, network-wide
-   management facilitates the enforcement of standardized policies and
-   configurations, thus ensuring consistent behavior and minimizing the
+   (including, embedded service functions) throughout their
+   infrastructure.  By implementing network-wide management and
+   configuration practices, operators can achieve centralized control
+   and better visibility over their network elements.  Doing so enables
+   them to streamline operations, monitor performance, and promptly
+   respond to network events.  Moreover, network-wide management
+   facilitates the enforcement of standardized policies and
+   configurations, thus, ensuring consistent behavior and minimizing the
    risk of errors or misconfigurations that may result in service
-   disruptions.  Additionally, it enables operators to implement
-   proactive actions such as performance optimization, load balancing,
-   and security policies across the entire network, fostering a more
-   secure and efficient infrastructure.
+   disruptions.  Additionally, that approach enables operators to
+   implement proactive actions such as performance optimization,
+   efficient load balancing, and security policies across the entire
+   network, fostering a more secure and efficient infrastructure.
 
    The ability to reuse device models may play a crucial role in network
    management.  Multiple teams within an organization, such as network
-   engineering, operations, and planning, can benefit from accessing
-   these device models.  These models serve as a common language for
-   understanding and configuring network elements, ensuring consistency
-   and interoperability across different teams and systems.  The
-   utilization of models from various teams is a key requirement for
-   network operators.
+   engineering, operations, and planning, can benefit from leveraging
+   and using these device models.  These models may serve as a common
+   "language" for understanding and managing network services and
+   elements, ensuring consistency and interoperability across different
+   teams and systems.  The utilization of models from various teams is a
+   key requirement for network operators.
 
    The IETF has made remarkable progress in defining device models to
    manage network element capabilities.  These device models, often
-   represented using YANG data modeling language, provide a structured,
-   standardized approach to manage various network devices and their
-   features.  By leveraging YANG models, network operators can
+   represented using YANG data modeling language [RFC7950], provide a
+   structured, standardized approach to manage various network devices
+   and their features.  By leveraging YANG models, network operators can
    effectively manage the network element functionalities.  These models
    not only streamline network management but also promote
    interoperability between different vendors and platforms, fostering a
    more efficient and robust networking ecosystem.
 
-   Some examples device models which can be managed:
+   Some examples device models which can be to manage specific network
+   functions are listed below:
 
    *  "ietf-routing-policy" [RFC8349]: This YANG model defines a generic
       data model for managing routing policies that can be applied to
@@ -160,6 +165,15 @@ Table of Contents
       ACLs, along with the ability to define rules for permitting,
       denying, or assigning a specific action to matching packets.
 
+   *  "ietf-nat" [RFC8512] defines a YANG module for the Network Address
+      Translation (NAT) function.  Various translation flavors are
+      covered: Network Address Translation from IPv4 to IPv4 (NAT44),
+      Network Address and Protocol Translation from IPv6 Clients to IPv4
+      Servers (NAT64), customer-side translator (CLAT), Stateless IP/
+      ICMP Translation (SIIT), Explicit Address Mappings (EAM) for SIIT,
+      IPv6-to-IPv6 Network Prefix Translation (NPTv6), and Destination
+      NAT.
+
    Software-Defined Networking (SDN) [RFC7149][RFC7426] controllers
    facilitate seamless communication and coordination between high-level
    management systems and the underlying network infrastructure.  This
@@ -167,11 +181,10 @@ Table of Contents
    and objectives, defined by the Operations Support Systems (OSS), into
    granular, device-specific configurations and commands for the network
    elements.  A similar concept applies for orchestration scenarios like
-   in network slicing.  Consequently, SDN controllers are typically
-   placed as intermediate entities between the OSS and the network
-   elements.  Figure 1 represents this scenario, where the SDN
-   controller exposes its customer-facing interface to the OSS or
-   orchestration layer.
+   in Network Slicing [RFC9543].  SDN controllers are typically placed
+   as intermediate entities between the OSS and the network elements.
+   Figure 1 represents such scenario, where an SDN controller exposes
+   its customer-facing interface to the OSS or orchestration layer.
 
                            +-----+  +------+
                            | OSS |  | Orch |
@@ -192,21 +205,21 @@ Table of Contents
                     Figure 1: An Example of SDN Scenario
 
    Figure 1 illustrates the hierarchical relationship between the OSS,
-   SDN controller and the network elements.  Typically, the OSS acts as
-   the central management system responsible for overseeing the entire
-   network.  Similarly, an orchestrator acts with a similar role in
-   scenarios like network slicing.  The SDN controller, positioned in
-   the middle, acts as an intermediary, facilitating communication and
+   SDN controllers, and the network elements.  In this example, the OSS
+   acts as the central management system responsible for overseeing the
+   entire network.  An orchestrator acts with a similar role in
+   scenarios like Network Slicing.  An SDN controller, positioned in the
+   middle, acts as an intermediary, facilitating communication, and
    coordination between the OSS and the network elements.  At the
    bottom, the network elements are directly controlled and configured
-   by the SDN controller.  This archicture enables efficient translation
-   of high-level network policies into device-specific configurations,
-   ultimately streamlining network management and decoupling the systems
-   from the network evolution.
+   by an SDN controller.  This architecture enables efficient
+   translation of high-level network policies into device-specific
+   configurations, ultimately streamlining network management and
+   decoupling the systems from the network evolution.
 
    Device models were defined to be applicable in the network-facing
    interface of an SDN controller.  As a result, these models do not
-   inherently possess the necessary network concepts to make them
+   inherently expose/capture the necessary network concepts to make them
    directly applicable in the customer-facing interface of the SDN
    controller.
 
@@ -224,6 +237,9 @@ Table of Contents
 2.  Terminology
 
 2.1.  Terminology and Notations
+
+   The meanings of the symbols in the YANG tree diagrams are defined in
+   [RFC8340].
 
    The document uses the following terms from [RFC8309] and [RFC8969]:
 
@@ -263,31 +279,31 @@ Table of Contents
 
 2.3.  Prefix in Data Node Names
 
-   In this document, names of data nodes and other data model objects
-   will be prefixed using the standard prefix associated with the
-   corresponding YANG imported modules, as shown in the following table.
+   Names of data nodes and other data model objects are prefixed using
+   the standard prefix associated with the corresponding YANG imported
+   modules, as shown in Table 1.
 
-               +========+=====================+===========+
-               | Prefix | Yang Module         | Reference |
-               +========+=====================+===========+
-               | ntwdev | ietf-network-device | RFCXXX    |
-               +--------+---------------------+-----------+
+              +========+=======================+===========+
+              | Prefix | Yang Module           | Reference |
+              +========+=======================+===========+
+              | grp    | ietf-grp-ntw-elements | RFCXXX    |
+              +--------+-----------------------+-----------+
 
                  Table 1: Prefixes and corresponding YANG
                                  modules
 
-   RFC Editor Note: Please replace XXXX with the RFC number assigned to
-   this document.  Please remove this note in that case.
+      RFC Editor Note:  Please replace XXXX with the RFC number assigned
+         to this document.  Please remove this note in that case.
 
 3.  Sample Use Cases
 
 3.1.  "Device Config"-as-a-Service
 
    "Device Config"-as-a-Service involves the use of device models by an
-   OSS to configure network elements through an SDN controller.  In this
-   scenario, the SDN controller acts as an intermediary between the OSS
-   and the network elements, providing a configuration service for each
-   network element.
+   OSS to configure network elements through the SDN controller.  In
+   this scenario, the SDN controller acts as an intermediary between the
+   OSS and the network elements, providing a configuration service for
+   each network element.
 
    By leveraging device models, the OSS gains a common representation of
    the network elements' capabilities and configuration parameters.
@@ -300,7 +316,7 @@ Table of Contents
    instructions based on the device models to the respective network
    elements.  The SDN controller translates and applies the
    configuration, ensuring consistency and correctness across the
-   network.  Moreover, the mediation of the SDN controller facilitates
+   network.  Moreover, the mediation of an SDN controller facilitates
    the access to the network elements from several users, applications
    or OSS minimizing the impact on the device.
 
@@ -336,27 +352,25 @@ Table of Contents
    cover the previous use cases.  It is intended to have a YANG model to
    tag a group of network elements under the same identifier, so the
    operator can apply a given configuration to a set of devices.  This
-   document defines a module called "grp-ntw-elements", which provides a
-   structured approach to represent and manage groups of network
-   elements, enabling efficient network management.
+   document defines a module called "ietf-grp-ntw-elements", which
+   provides a structured approach to represent and manage groups of
+   network elements, enabling efficient network management.
 
-   The "grp-ntw-elements" module defines a YANG model for representing a
-   group of network elements.  Within the module, there is a list called
-   "grp-ntw-element" that includes the groups of network elements.  Each
-   group is uniquely identified by the "grp-ne-id" leaf, which has a
-   string data type and represents the group's identifier.  The "grp-
-   ntw-element" list has a nested list called "ntw-elements" to specify
-   the individual network elements within each group.  The "ntw-element"
-   list has a key of "ne-id" to uniquely identify each network element.
-   The "ne-id" leaf represents the identifier of each network element
-   and has a string data type.
+   The "ietf-grp-ntw-elements" module defines a YANG model for
+   representing a group of network elements.  Within the module, there
+   is a list called "grp-ntw-element" that includes the groups of
+   network elements.  Each group is uniquely identified by the "grp-ne-
+   id" leaf, which has a string data type and represents the group's
+   identifier.  The "grp-ntw-element" list has a nested list called
+   "ntw-elements" to specify the individual network elements within each
+   group.  The "ntw-element" list has a key of "ne-id" to uniquely
+   identify each network element.  The "ne-id" leaf represents the
+   identifier of each network element and has a string data type.
 
-   Figure 2 represents the tree of the proposed YANG model.  Tree
-   diagrams used in this document follow the notation defined in
-   [RFC8340].
+   Figure 2 represents the tree of the proposed YANG model.
 
-                   module: grp-ntw-elements
-                     +--rw grp-ntw-element* [grp-ne-id]
+                   module: ietf-grp-ntw-elements
+                     +--rw grp-ntw-elements* [grp-ne-id]
                         +--rw grp-ne-id       string
                         +--rw ntw-element* [ne-id]
                            +--rw ne-id    string
@@ -384,7 +398,7 @@ Table of Contents
    *  A leaf named "devmod-alias" of type string that serves as the
       device module alias for the deployment.
 
-   *  A list called "grp-ntw-element" with the following elements:
+   *  A list called "grp-ntw-elements" with the following elements:
 
       -  A leaf named "grp-ne-id" of type string that serves as the
          network element identifier (which is the key).
@@ -429,49 +443,63 @@ Table of Contents
 
 5.1.  Groups of Network Elements
 
-   <CODE BEGINS> file "grp-ntw-elements@2023-10-23.yang"
-   module grp-ntw-elements {
+   <CODE BEGINS> file "ietf-grp-ntw-elements@2024-07-05.yang"
+   module ietf-grp-ntw-elements {
      yang-version 1.1;
-     namespace "urn:ietf:params:xml:ns:yang:grp-ntw-elements";
+     namespace "urn:ietf:params:xml:ns:yang:ietf-grp-ntw-elements";
      prefix "grp";
 
      organization
-       "IETF OPSA (Operations and Management Area) Working Group";
+       "IETF NETMOD Working Group";
      contact
-       "WG Web:  <https://datatracker.ietf.org/wg/opsawg/>
-       WG List:  <mailto:opsawg@ietf.org>
+       "WG Web:  <https://datatracker.ietf.org/wg/netmod/>
+       WG List:  <mailto:netmod@ietf.org>
 
        Editor:   Oscar Gonzalez de Dios
                  <mailto:oscar.gonzalezdedios@telefonica.com>
        Editor:   Victor Lopez
                  <mailto:victor.lopez@nokia.com>
        Editor:   Mohamed Boucadair
-                 <mailto:mohamed.boucadair@orange.com>";
+                 <mailto:mohamed.boucadair@orange.com>
+       Editor:   Daniele Ceccarelli
+                 <mailto:dceccare@cisco.com>";
 
      description "YANG model for group of network elements.";
 
      revision "2023-10-23" {
        description "Initial revision.";
-       reference "RFC XXXX: An Approach to Expose 'Device Models'
-                            -as-'Network Models'";
+       reference
+         "RFC XXXX: An Approach to Expose 'Device Models'
+         -as-'Network Models'";
      }
 
-     list grp-ntw-element {
+     revision "2024-07-05" {
+       description "Updated naming for ietf-grp-ntw-elements.";
+       reference
+         "RFC XXXX: An Approach to Expose 'Device Models'
+         -as-'Network Models'";
+     }
+
+     list grp-ntw-elements {
        key "grp-ne-id";
-       description "List of groups of network elements.";
+       description
+         "List of groups of network elements.";
 
        leaf grp-ne-id {
          type string;
-         description "Group of network element identifier.";
+         description
+            "Group of network element identifier.";
        }
 
        list ntw-element {
          key "ne-id";
-         description "List of network elements.";
+         description
+            "List of network elements.";
 
          leaf ne-id {
            type string;
-           description "Network element identifier.";
+           description
+            "Network element identifier.";
          }
        }
      }
@@ -493,6 +521,11 @@ Table of Contents
      description "YANG model for foo-dev.";
      revision "2023-10-23" {
        description "Initial revision.";
+       reference "RFC XXXX: YANG Model for foo-dev";
+     }
+
+     revision "2024-07-05" {
+       description "Updated list of grp-ntw-elements.";
        reference "RFC XXXX: YANG Model for foo-dev";
      }
 
@@ -520,7 +553,7 @@ Table of Contents
          }
        }
 
-       list grp-ntw-element {
+       list grp-ntw-elements {
          key "grp-ne-id";
          description "List of group of network elements.";
 
@@ -579,15 +612,16 @@ Table of Contents
    IANA is requested to register the following URI in the "ns"
    subregistry within the "IETF XML Registry" [RFC3688]:
 
-   URI: urn:ietf:params:xml:ns:yang:xxxx Registrant Contact: The IESG.
-   XML: N/A; the requested URI is an XML namespace.
+   URI: urn:ietf:params:xml:ns:yang:grp-ntw-elements Registrant Contact:
+   The IESG.  XML: N/A; the requested URI is an XML namespace.
 
    IANA is requested to register the following YANG module in the "YANG
    Module Names" registry [RFC6020] within the "YANG Parameters"
    registry group.
 
    Name: xxx Maintained by IANA?  N Namespace:
-   urn:ietf:params:xml:ns:yang:xxx Prefix: xxx Reference: RFC xxxx
+   urn:ietf:params:xml:ns:yang:grp-ntw-elements Prefix: grp Reference:
+   RFC XXXX
 
 8.  Implementation Status
 
@@ -595,14 +629,9 @@ Table of Contents
    of the model.  It is aimed at being removed if the document becomes
    RFC.
 
-9.  Normative References
+9.  References
 
-   [I-D.ietf-idr-bgp-model]
-              Jethanandani, M., Patel, K., Hares, S., and J. Haas, "YANG
-              Model for Border Gateway Protocol (BGP-4)", Work in
-              Progress, Internet-Draft, draft-ietf-idr-bgp-model-17, 5
-              July 2023, <https://datatracker.ietf.org/doc/html/draft-
-              ietf-idr-bgp-model-17>.
+9.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -637,6 +666,10 @@ Table of Contents
               Defined Networking (SDN): Layers and Architecture
               Terminology", RFC 7426, DOI 10.17487/RFC7426, January
               2015, <https://www.rfc-editor.org/rfc/rfc7426>.
+
+   [RFC7950]  Bjorklund, M., Ed., "The YANG 1.1 Data Modeling Language",
+              RFC 7950, DOI 10.17487/RFC7950, August 2016,
+              <https://www.rfc-editor.org/rfc/rfc7950>.
 
    [RFC8040]  Bierman, A., Bjorklund, M., and K. Watsen, "RESTCONF
               Protocol", RFC 8040, DOI 10.17487/RFC8040, January 2017,
@@ -673,11 +706,6 @@ Table of Contents
               (NMDA)", RFC 8342, DOI 10.17487/RFC8342, March 2018,
               <https://www.rfc-editor.org/rfc/rfc8342>.
 
-   [RFC8349]  Lhotka, L., Lindem, A., and Y. Qu, "A YANG Data Model for
-              Routing Management (NMDA Version)", RFC 8349,
-              DOI 10.17487/RFC8349, March 2018,
-              <https://www.rfc-editor.org/rfc/rfc8349>.
-
    [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
               <https://www.rfc-editor.org/rfc/rfc8446>.
@@ -706,6 +734,32 @@ Table of Contents
               S., and L. Munoz, "A YANG Network Data Model for Layer 2
               VPNs", RFC 9291, DOI 10.17487/RFC9291, September 2022,
               <https://www.rfc-editor.org/rfc/rfc9291>.
+
+   [RFC9543]  Farrel, A., Ed., Drake, J., Ed., Rokui, R., Homma, S.,
+              Makhijani, K., Contreras, L., and J. Tantsura, "A
+              Framework for Network Slices in Networks Built from IETF
+              Technologies", RFC 9543, DOI 10.17487/RFC9543, March 2024,
+              <https://www.rfc-editor.org/rfc/rfc9543>.
+
+9.2.  Informative References
+
+   [I-D.ietf-idr-bgp-model]
+              Jethanandani, M., Patel, K., Hares, S., and J. Haas, "YANG
+              Model for Border Gateway Protocol (BGP-4)", Work in
+              Progress, Internet-Draft, draft-ietf-idr-bgp-model-17, 5
+              July 2023, <https://datatracker.ietf.org/doc/html/draft-
+              ietf-idr-bgp-model-17>.
+
+   [RFC8349]  Lhotka, L., Lindem, A., and Y. Qu, "A YANG Data Model for
+              Routing Management (NMDA Version)", RFC 8349,
+              DOI 10.17487/RFC8349, March 2018,
+              <https://www.rfc-editor.org/rfc/rfc8349>.
+
+   [RFC8512]  Boucadair, M., Ed., Sivakumar, S., Jacquenet, C.,
+              Vinapamula, S., and Q. Wu, "A YANG Module for Network
+              Address Translation (NAT) and Network Prefix Translation
+              (NPT)", RFC 8512, DOI 10.17487/RFC8512, January 2019,
+              <https://www.rfc-editor.org/rfc/rfc8512>.
 
 Acknowledgments
 
