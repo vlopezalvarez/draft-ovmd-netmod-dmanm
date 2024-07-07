@@ -1,7 +1,7 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-07-04T01:23:44.061335+00:00",
-  "repo": "vlopezalvarez/draft-ogondio-opsawg-dmanm",
+  "timestamp": "2024-07-07T01:36:31.829671+00:00",
+  "repo": "vlopezalvarez/draft-ovmd-netmod-dmanm",
   "labels": [
     {
       "name": "bug",
@@ -55,7 +55,7 @@
       "number": 1,
       "id": "PR_kwDOJ4N0Cs5dhWof",
       "title": "An Approach to Expose 'Device Models'-as-'Network Models'",
-      "url": "https://github.com/vlopezalvarez/draft-ogondio-opsawg-dmanm/pull/1",
+      "url": "https://github.com/vlopezalvarez/draft-ovmd-netmod-dmanm/pull/1",
       "state": "MERGED",
       "author": "boucadair",
       "authorAssociation": "COLLABORATOR",
@@ -64,10 +64,10 @@
       "body": "",
       "createdAt": "2023-10-23T11:54:38Z",
       "updatedAt": "2023-10-23T13:33:18Z",
-      "baseRepository": "vlopezalvarez/draft-ogondio-opsawg-dmanm",
+      "baseRepository": "vlopezalvarez/draft-ovmd-netmod-dmanm",
       "baseRefName": "main",
       "baseRefOid": "ed096ddac992710cac74611c4edac797624a3a32",
-      "headRepository": "vlopezalvarez/draft-ogondio-opsawg-dmanm",
+      "headRepository": "vlopezalvarez/draft-ovmd-netmod-dmanm",
       "headRefName": "boucadair-patch-1",
       "headRefOid": "b9ef7bd829a8c2d7501935551798b88fcf6558a8",
       "closedAt": "2023-10-23T13:33:18Z",
@@ -83,7 +83,7 @@
       "number": 2,
       "id": "PR_kwDOJ4N0Cs5disnd",
       "title": "ntwdev is only an example",
-      "url": "https://github.com/vlopezalvarez/draft-ogondio-opsawg-dmanm/pull/2",
+      "url": "https://github.com/vlopezalvarez/draft-ovmd-netmod-dmanm/pull/2",
       "state": "CLOSED",
       "author": "boucadair",
       "authorAssociation": "COLLABORATOR",
@@ -92,10 +92,10 @@
       "body": "",
       "createdAt": "2023-10-23T15:00:43Z",
       "updatedAt": "2024-07-03T14:56:40Z",
-      "baseRepository": "vlopezalvarez/draft-ogondio-opsawg-dmanm",
+      "baseRepository": "vlopezalvarez/draft-ovmd-netmod-dmanm",
       "baseRefName": "main",
       "baseRefOid": "9fa10c2df900dee66c72dbd984b3fcff96f96075",
-      "headRepository": "vlopezalvarez/draft-ogondio-opsawg-dmanm",
+      "headRepository": "vlopezalvarez/draft-ovmd-netmod-dmanm",
       "headRefName": "boucadair-patch-2",
       "headRefOid": "ee7af708d16d731ebc32426032a7e39b349d86f8",
       "closedAt": "2024-07-03T14:56:39Z",
@@ -117,25 +117,27 @@
       "number": 3,
       "id": "PR_kwDOJ4N0Cs50UCOH",
       "title": "Create draft-ovmd-netmod-dmanm.md",
-      "url": "https://github.com/vlopezalvarez/draft-ogondio-opsawg-dmanm/pull/3",
-      "state": "OPEN",
+      "url": "https://github.com/vlopezalvarez/draft-ovmd-netmod-dmanm/pull/3",
+      "state": "MERGED",
       "author": "oscargdd",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2024-07-03T11:21:00Z",
-      "updatedAt": "2024-07-03T14:56:20Z",
-      "baseRepository": "vlopezalvarez/draft-ogondio-opsawg-dmanm",
+      "updatedAt": "2024-07-05T08:41:32Z",
+      "baseRepository": "vlopezalvarez/draft-ovmd-netmod-dmanm",
       "baseRefName": "main",
       "baseRefOid": "9fa10c2df900dee66c72dbd984b3fcff96f96075",
-      "headRepository": "vlopezalvarez/draft-ogondio-opsawg-dmanm",
+      "headRepository": "vlopezalvarez/draft-ovmd-netmod-dmanm",
       "headRefName": "netmod-version2",
       "headRefOid": "b88eaa9a0eb019c0a9d870dcf3bc96c1b2d0f3a1",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-07-05T08:41:32Z",
+      "mergedAt": "2024-07-05T08:41:32Z",
+      "mergedBy": "vlopezalvarez",
+      "mergeCommit": {
+        "oid": "a960b9e0daf3c1e530ef41ef903168b800e5fbe4"
+      },
       "comments": [],
       "reviews": [
         {
@@ -212,9 +214,9 @@
             },
             {
               "originalPosition": 71,
-              "body": "```suggestion\r\nSoftware-Defined Networking (SDN) {{!RFC7149}}{{!RFC7426}} controllers facilitate seamless communication and coordination between high-level management systems and the underlying network infrastructure. This arrangement enables efficient translation of network-wide policies and objectives, defined by the Operations Support Systems (OSS), into granular, device-specific configurations and commands for the network elements. A similar concept applies for orchestration scenarios like in Network Slicing {{?RFC9543}}. SDN controllers are typically placed as intermediate entities between the OSS and the network elements. {{SDNsce}} represents such scenario, where an SDN controller exposes its customer-facing interface to the OSS or orchestration layer.\r\n```",
+              "body": "```suggestion\r\nSoftware-Defined Networking (SDN) {{!RFC7149}}{{!RFC7426}} controllers facilitate seamless communication and coordination between high-level management systems and the underlying network infrastructure. This arrangement enables efficient translation of network-wide policies and objectives, defined by the Operations Support Systems (OSS), into granular, device-specific configurations and commands for the network elements. A similar concept applies for orchestration scenarios like in Network Slicing {{!RFC9543}}. SDN controllers are typically placed as intermediate entities between the OSS and the network elements. {{SDNsce}} represents such scenario, where an SDN controller exposes its customer-facing interface to the OSS or orchestration layer.\r\n```",
               "createdAt": "2024-07-03T11:48:14Z",
-              "updatedAt": "2024-07-03T11:58:45Z"
+              "updatedAt": "2024-07-05T08:36:03Z"
             },
             {
               "originalPosition": 92,
@@ -266,9 +268,9 @@
             },
             {
               "originalPosition": 103,
-              "body": "```suggestion\r\n\r\nThe meanings of the symbols in the YANG tree diagrams are defined in {{?RFC8340}}.\r\n```",
+              "body": "```suggestion\r\n\r\nThe meanings of the symbols in the YANG tree diagrams are defined in {{!RFC8340}}.\r\n```",
               "createdAt": "2024-07-03T11:53:53Z",
-              "updatedAt": "2024-07-03T11:58:45Z"
+              "updatedAt": "2024-07-05T08:37:02Z"
             },
             {
               "originalPosition": 223,
@@ -387,8 +389,47 @@
               "updatedAt": "2024-07-03T14:56:20Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOJ4N0Cs6Awsxz",
+          "commit": {
+            "abbreviatedOid": "b88eaa9"
+          },
+          "author": "vlopezalvarez",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "Review changes from the comments",
+          "createdAt": "2024-07-05T08:40:27Z",
+          "updatedAt": "2024-07-05T08:40:27Z",
+          "comments": []
         }
       ]
+    },
+    {
+      "number": 4,
+      "id": "PR_kwDOJ4N0Cs50g6HW",
+      "title": "Revert \"Create draft-ovmd-netmod-dmanm.md\"",
+      "url": "https://github.com/vlopezalvarez/draft-ovmd-netmod-dmanm/pull/4",
+      "state": "CLOSED",
+      "author": "vlopezalvarez",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Reverts vlopezalvarez/draft-ogondio-opsawg-dmanm#3",
+      "createdAt": "2024-07-05T08:48:41Z",
+      "updatedAt": "2024-07-05T09:06:13Z",
+      "baseRepository": "vlopezalvarez/draft-ovmd-netmod-dmanm",
+      "baseRefName": "main",
+      "baseRefOid": "a960b9e0daf3c1e530ef41ef903168b800e5fbe4",
+      "headRepository": "vlopezalvarez/draft-ovmd-netmod-dmanm",
+      "headRefName": "revert-3-netmod-version2",
+      "headRefOid": "c013f634393442fcd9a65676696c346b2d4170cb",
+      "closedAt": "2024-07-05T09:06:06Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
