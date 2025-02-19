@@ -5,10 +5,10 @@
 Operations and Management Area Working Group               O. G. D. Dios
 Internet-Draft                                                Telefonica
 Intended status: Informational                                  V. Lopez
-Expires: 6 January 2025                                            Nokia
+Expires: 23 August 2025                                            Nokia
                                                             M. Boucadair
                                                                   Orange
-                                                             5 July 2024
+                                                        19 February 2025
 
 
        An Approach to Expose 'Device Models'-as-'Network Models'
@@ -59,11 +59,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 6 January 2025.
+   This Internet-Draft will expire on 23 August 2025.
 
 Copyright Notice
 
-   Copyright (c) 2024 IETF Trust and the persons identified as the
+   Copyright (c) 2025 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -599,9 +599,9 @@ Table of Contents
    [I-D.ietf-idr-bgp-model]
               Jethanandani, M., Patel, K., Hares, S., and J. Haas, "YANG
               Model for Border Gateway Protocol (BGP-4)", Work in
-              Progress, Internet-Draft, draft-ietf-idr-bgp-model-17, 5
-              July 2023, <https://datatracker.ietf.org/doc/html/draft-
-              ietf-idr-bgp-model-17>.
+              Progress, Internet-Draft, draft-ietf-idr-bgp-model-18, 21
+              October 2024, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-idr-bgp-model-18>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
